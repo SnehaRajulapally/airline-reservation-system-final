@@ -12,20 +12,19 @@ public class Main extends Application {
 	public void start(Stage primaryStage) {
 		try {
 			stage = primaryStage;
-			AnchorPane root = (AnchorPane) 
-	        FXMLLoader.load(getClass().getResource("/views/LoginView.fxml"));
-			Scene scene = new Scene(root);
+			FXMLLoader loader = new FXMLLoader(Main.class.getResource("/views/LoginView.fxml"));
+			AnchorPane root = (AnchorPane) loader.load();
+			Scene scene = new Scene(root,800,600);
 	        scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setTitle("Illinois Tech Airways Login Page");
 			primaryStage.setScene(scene);
 			primaryStage.show();
 		} catch(Exception e) {
-			System.out.println("Error in inflating view: " + e);
+		    System.out.println("Error in inflating view: " + e);
 			e.printStackTrace();
 			
 		}
 	}
-	
 	public static void main(String[] args) {
 		launch(args);
 	}

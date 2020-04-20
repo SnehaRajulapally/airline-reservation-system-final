@@ -24,53 +24,57 @@ public class LoginController {
 	
 	private LoginModel model;
     public LoginController() { model = new LoginModel(); }
-
+    
+  
 	public void login() {
 
 		lblError.setText("");
 		String username = this.txtUsername.getText();
 		String password = this.txtPassword.getText();
 
-		// Validations
 		if (username == null || username.trim().equals("")) {
 			lblError.setText("Error: Invalid Username!");
+			txtUsername.setText("");
+			txtPassword.setText("");
 			return;
 		}
 		if (password == null || password.trim().equals("")) {
 			lblError.setText("Error: Invalid Password!");
+			txtUsername.setText("");
+			txtPassword.setText("");
 			return;
 		}
 		if (username == null || username.trim().equals("") && (password == null || password.trim().equals(""))) {
-			lblError.setText(" Error: Spaces are not allowed. Please Re-enter!");
+			lblError.setText("Error: Spaces are not allowed. Please Re-enter!");
+			txtUsername.setText("");
+			txtPassword.setText("");
 			return;
 		}
-		/*if (username.equals("sneha") && password.equals("510")) {
-			lblError.setText("Login Successful!!");
-			return;
-		} 
-		else { lblError.setText("Error: Login Unsuccessful!"); }*/
-		// authentication check
 				checkCredentials(username, password);
 	}
+	
+	  public void cancel()
+	    {
+			lblError.setText("");
+			txtUsername.setText("");
+			txtPassword.setText("");
+	    }
 
 				public void checkCredentials(String username, String password) {
 					Boolean isValid = model.getCredentials(username, password);
 					if (!isValid) {
-						lblError.setText("User does not exist!");
+						lblError.setText("Error: Invalid User!");
 						return;
 					}
 					try {
 						AnchorPane root;
+					 	AdminController.setUsername(username);
+						UserController.setUsername(username);
 						if (model.isAdmin() && isValid) {
-						 // If user is admin, inflate admin view
-			 root = (AnchorPane)  FXMLLoader.load(getClass().getResource("/views/AdminView.fxml"));
+			            root = (AnchorPane)FXMLLoader.load(getClass().getResource("/views/AdminView.fxml"));
 							Main.stage.setTitle("Admin View");
 			  			} else {
-			 			// If user is customer, inflate customer view
-			root = (AnchorPane) FXMLLoader.load(getClass().getResource("/views/ClientView.fxml"));
-						// ***Set user ID acquired from db****
-						//int user_id = 1;  //hard coded for testing purposes only!!
-			 			//ClientController.setUser(user_id);
+			            root = (AnchorPane)FXMLLoader.load(getClass().getResource("/views/UserView.fxml"));
 						Main.stage.setTitle("User View");
 						}
 						Scene scene = new Scene(root);
@@ -80,7 +84,6 @@ public class LoginController {
 					}
 
 				}
-
 	}
 	
 
