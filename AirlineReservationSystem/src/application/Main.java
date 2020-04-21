@@ -21,8 +21,7 @@ public class Main extends Application {
 			primaryStage.show();
 		} catch(Exception e) {
 		    System.out.println("Error in inflating view: " + e);
-			e.printStackTrace();
-			
+			e.printStackTrace();	
 		}
 	}
 	public static void main(String[] args) {
