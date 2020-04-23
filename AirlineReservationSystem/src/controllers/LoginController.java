@@ -87,13 +87,20 @@ public class LoginController {
 					}
 					try {
 						AnchorPane root;
+						Alert alert = new Alert(AlertType.INFORMATION);
+						alert.setTitle("Welcome Message");
+						alert.setHeaderText("Illinois Tech Airways");
+						alert.setContentText("Welcome " + username+"!");
+						alert.showAndWait();
 						if (model.isAdmin() && isValid) {
 			            root = (AnchorPane)FXMLLoader.load(getClass().getResource("/views/AdminView.fxml"));
 							Main.stage.setTitle("Admin View");
+							System.out.println("Launched Admin Screen");
 							AdminController.setUsername(username);
 			  			} else {
 			            root = (AnchorPane)FXMLLoader.load(getClass().getResource("/views/UserView.fxml"));
 						Main.stage.setTitle("User View");
+						System.out.println("Launched User Screen");
 						UserController.setUsername(username);
 						}
 						Scene scene = new Scene(root);

@@ -29,7 +29,7 @@
       <Button layoutX="48.0" layoutY="113.0" mnemonicParsing="false" onAction="#viewprofile" prefHeight="25.0" prefWidth="120.0" text="VIEW PROFILE" />
       <Button layoutX="48.0" layoutY="212.0" mnemonicParsing="false" onAction="#viewhistory" prefHeight="25.0" prefWidth="120.0" text="VIEW HISTORY" />
       <Button layoutX="48.0" layoutY="260.0" mnemonicParsing="false" onAction="#bookticket" prefHeight="25.0" prefWidth="120.0" text="BOOK TICKET" />
-      <Pane fx:id="pane4" layoutX="178.0" layoutY="79.0" prefHeight="477.0" prefWidth="611.0" visible="false">
+      <Pane fx:id="pane4" layoutX="178.0" layoutY="79.0" prefHeight="477.0" prefWidth="611.0">
          <children>
             <Label layoutX="7.0" layoutY="11.0" text="From:">
                <font>
@@ -56,10 +56,10 @@
             <ChoiceBox layoutX="154.0" layoutY="34.0" prefHeight="25.0" prefWidth="126.0" />
             <ChoiceBox layoutX="451.0" layoutY="34.0" prefHeight="25.0" prefWidth="126.0" />
             <Button layoutX="234.0" layoutY="70.0" mnemonicParsing="false" onAction="#search" prefWidth="100.0" text="SEARCH" />
-            <Button layoutX="243.0" layoutY="438.0" mnemonicParsing="false" onAction="#book" prefWidth="100.0" text="BOOK" />
+            <Button layoutX="240.0" layoutY="438.0" mnemonicParsing="false" onAction="#book" prefWidth="100.0" text="BOOK" />
          </children>
       </Pane>
-      <Pane fx:id="pane1" layoutX="226.0" layoutY="96.0" prefHeight="400.0" prefWidth="545.0">
+      <Pane fx:id="pane1" layoutX="226.0" layoutY="96.0" prefHeight="400.0" prefWidth="545.0" visible="false">
          <children>
             <Label layoutX="26.0" layoutY="19.0" text="First Name:">
                <font>
@@ -106,15 +106,15 @@
                   <Font size="14.0" />
                </font>
             </Label>
-            <TextField fx:id="txtFName" layoutX="120.0" layoutY="19.0" />
-            <TextField fx:id="txtLName" layoutX="381.0" layoutY="19.0" />
+            <TextField fx:id="txtFname" layoutX="120.0" layoutY="19.0" />
+            <TextField fx:id="txtLname" layoutX="381.0" layoutY="19.0" />
             <TextField fx:id="txtEmail" layoutX="121.0" layoutY="103.0" prefHeight="25.0" prefWidth="200.0" />
-            <TextField fx:id="txtPhonenumber" layoutX="120.0" layoutY="146.0" />
+            <TextField fx:id="txtPhone" layoutX="120.0" layoutY="146.0" />
             <TextField fx:id="txtAdress" layoutX="120.0" layoutY="191.0" prefHeight="25.0" prefWidth="291.0" />
             <TextField fx:id="txtCity" layoutX="120.0" layoutY="239.0" />
             <TextField fx:id="txtState" layoutX="378.0" layoutY="240.0" />
             <TextField fx:id="txtZipcode" layoutX="120.0" layoutY="285.0" />
-            <DatePicker fx:id="txtDOB" layoutX="120.0" layoutY="60.0" />
+            <DatePicker fx:id="txtDob" layoutX="120.0" layoutY="60.0" />
             <Button layoutX="221.0" layoutY="343.0" mnemonicParsing="false" onAction="#update" prefWidth="100.0" text="UPDATE" />
          </children>
       </Pane>
@@ -165,15 +165,15 @@
                   <Font size="14.0" />
                </font>
             </Label>
-            <TextField fx:id="txtFName1" layoutX="120.0" layoutY="19.0" />
-            <TextField fx:id="txtLName1" layoutX="381.0" layoutY="19.0" />
-            <TextField fx:id="txtEmail1" layoutX="121.0" layoutY="103.0" prefHeight="25.0" prefWidth="200.0" />
-            <TextField fx:id="txtPhonenumber1" layoutX="120.0" layoutY="146.0" />
-            <TextField fx:id="txtAdress1" layoutX="120.0" layoutY="191.0" prefHeight="25.0" prefWidth="291.0" />
-            <TextField fx:id="txtCity1" layoutX="120.0" layoutY="233.0" />
-            <TextField fx:id="txtState1" layoutX="378.0" layoutY="234.0" />
-            <TextField fx:id="txtZipcode1" layoutX="120.0" layoutY="277.0" />
-            <DatePicker fx:id="txtDOB1" layoutX="120.0" layoutY="60.0" />
+            <TextField fx:id="txtFname" layoutX="120.0" layoutY="19.0" />
+            <TextField fx:id="txtLname" layoutX="381.0" layoutY="19.0" />
+            <TextField fx:id="txtEmail" layoutX="121.0" layoutY="103.0" prefHeight="25.0" prefWidth="200.0" />
+            <TextField fx:id="txtPhone" layoutX="120.0" layoutY="146.0" />
+            <TextField fx:id="txtAdress" layoutX="120.0" layoutY="191.0" prefHeight="25.0" prefWidth="291.0" />
+            <TextField fx:id="txtCity" layoutX="120.0" layoutY="233.0" />
+            <TextField fx:id="txtState" layoutX="378.0" layoutY="234.0" />
+            <TextField fx:id="txtZipcode" layoutX="120.0" layoutY="277.0" />
+            <DatePicker fx:id="txtDob" layoutX="120.0" layoutY="60.0" />
             <Button layoutX="194.0" layoutY="413.0" mnemonicParsing="false" onAction="#update" prefWidth="100.0" text="CREATE" />
             <Label layoutX="295.0" layoutY="281.0" text="User Type:">
                <font>

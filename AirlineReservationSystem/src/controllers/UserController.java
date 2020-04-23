@@ -24,11 +24,11 @@ public class UserController {
 	@FXML
 	private Pane pane3;
 
-	/*private TextField txtFName;
-	private TextField txtLName;
-	private DatePicker txtDOB;
+	/*private TextField txtFname;
+	private TextField txtLname;
+	private DatePicker txtDob;
 	private TextField txtEmail;
-	private TextField txtPhonenumber;
+	private TextField txtPhone;
 	private TextField txtAdress;
 	private TextField txtCity;
 	private TextField txtState;
@@ -41,7 +41,7 @@ public class UserController {
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setTitle("Thank you Message");
 		alert.setHeaderText("Illinois Tech Airways");
-		alert.setContentText("Thank you for choosing us!Please visit again!");
+		alert.setContentText("Thank you for choosing us! Please visit again!");
 		alert.showAndWait();
 		 try {
 			 AnchorPane root = (AnchorPane) 
@@ -49,6 +49,7 @@ public class UserController {
 			 Scene scene = new Scene(root,800,600);
 		   Main.stage.setScene(scene);
 		   Main.stage.setTitle("Illinois Tech Airways Home Page");
+		   System.out.println("Launched Illinois Tech Airways Home Screen");
 		   Main.stage.show();
 		  } catch (Exception e) {
 		  System.out.println("Error in inflating view: " + e.getMessage());
@@ -61,12 +62,7 @@ public class UserController {
 	}
 
 	public UserController() {
-		//conn = new DBConnect();
-		Alert alert = new Alert(AlertType.INFORMATION);
-		alert.setTitle("Welcome Message");
-		alert.setHeaderText("Illinois Tech Airways");
-		alert.setContentText("Welcome User!");
-		alert.showAndWait();
+	
 	}
 	
 	public void viewprofile() {
@@ -103,6 +99,7 @@ public class UserController {
 		try {
 			 AnchorPane root = (AnchorPane) 
 					   FXMLLoader.load(getClass().getResource("/views/TicketView.fxml"));
+				System.out.println("Launched TicketDeatils Screen");
 			 Scene scene = new Scene(root,800,600);
 		   Main.stage.setScene(scene);
 		   Main.stage.setTitle("Ticket Details");

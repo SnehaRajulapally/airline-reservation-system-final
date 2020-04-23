@@ -30,7 +30,7 @@ public class AdminController {
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setTitle("Thank you Message");
 		alert.setHeaderText("Illinois Tech Airways");
-		alert.setContentText("Thank you for choosing us!Please visit again!");
+		alert.setContentText("Thank you for choosing us! Please visit again!");
 		alert.showAndWait();
 		 try {
 			 AnchorPane root = (AnchorPane) 
@@ -38,6 +38,7 @@ public class AdminController {
 			 Scene scene = new Scene(root,800,600);
 		   Main.stage.setScene(scene);
 		   Main.stage.setTitle("Illinois Tech Airways Home Page");
+		System.out.println("Launched Illinois Tech Airways Home Screen");
 		   Main.stage.show();
 		  } catch (Exception e) {
 		  System.out.println("Error in inflating view: " + e.getMessage());
@@ -50,11 +51,7 @@ public class AdminController {
 	}
 
 	public AdminController() {
-		Alert alert = new Alert(AlertType.INFORMATION);
-		alert.setTitle("Welcome Message");
-		alert.setHeaderText("Illinois Tech Airways");
-		alert.setContentText("Welcome Admin!");
-		alert.showAndWait();
+	
 	}
 	public void bookticket() {
 		pane4.setVisible(true);
@@ -97,6 +94,7 @@ public class AdminController {
 		try {
 			 AnchorPane root = (AnchorPane) 
 					   FXMLLoader.load(getClass().getResource("/views/TicketView.fxml"));
+				System.out.println("Launched TicketDeatils Screen");
 			 Scene scene = new Scene(root,800,600);
 		   Main.stage.setScene(scene);
 		   Main.stage.setTitle("Ticket Details");

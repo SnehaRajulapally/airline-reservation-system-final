@@ -74,15 +74,15 @@
                   <Font size="14.0" />
                </font>
             </Label>
-            <TextField fx:id="txtFName" layoutX="120.0" layoutY="19.0" />
-            <TextField fx:id="txtLName" layoutX="381.0" layoutY="19.0" />
+            <TextField fx:id="txtFname" layoutX="120.0" layoutY="19.0" />
+            <TextField fx:id="txtLname" layoutX="381.0" layoutY="19.0" />
             <TextField fx:id="txtEmail" layoutX="121.0" layoutY="103.0" prefHeight="25.0" prefWidth="200.0" />
-            <TextField fx:id="txtPhonenumber" layoutX="120.0" layoutY="146.0" />
+            <TextField fx:id="txtPhone" layoutX="120.0" layoutY="146.0" />
             <TextField fx:id="txtAdress" layoutX="120.0" layoutY="191.0" prefHeight="25.0" prefWidth="291.0" />
             <TextField fx:id="txtCity" layoutX="120.0" layoutY="239.0" />
             <TextField fx:id="txtState" layoutX="359.0" layoutY="240.0" />
             <TextField fx:id="txtZipcode" layoutX="120.0" layoutY="285.0" />
-            <DatePicker fx:id="txtDOB" layoutX="120.0" layoutY="60.0" />
+            <DatePicker fx:id="txtDob" layoutX="120.0" layoutY="60.0" />
             <Button layoutX="221.0" layoutY="343.0" mnemonicParsing="false" onAction="#update" prefWidth="100.0" text="UPDATE" />
          </children>
       </Pane>
