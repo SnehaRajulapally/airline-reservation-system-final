@@ -41,5 +41,6 @@
             <Font size="14.0" />
          </font>
       </Label>
+      <Button layoutX="406.0" layoutY="558.0" mnemonicParsing="false" onAction="#home" prefHeight="25.0" prefWidth="100.0" text="HOME" />
    </children>
 </AnchorPane>

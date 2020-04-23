@@ -1,13 +1,16 @@
 package controllers;
 
-import java.awt.TextField;
+//import java.awt.TextField;
+import java.util.Optional;
 
 import application.Main;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.Alert.AlertType;
+//import javafx.scene.control.DatePicker;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 
@@ -21,15 +24,15 @@ public class UserController {
 	@FXML
 	private Pane pane3;
 
-	private TextField txtFName;
+	/*private TextField txtFName;
 	private TextField txtLName;
-	private TextField txtDOB;
+	private DatePicker txtDOB;
 	private TextField txtEmail;
 	private TextField txtPhonenumber;
 	private TextField txtAdress;
 	private TextField txtCity;
 	private TextField txtState;
-	private TextField txtZipcode;
+	private TextField txtZipcode;*/
 	//DBConnect conn = null;
 	//Statement stmt = null;
 	static String user_name;
@@ -42,10 +45,10 @@ public class UserController {
 		alert.showAndWait();
 		 try {
 			 AnchorPane root = (AnchorPane) 
-					   FXMLLoader.load(getClass().getResource("/views/LoginView.fxml"));
+					   FXMLLoader.load(getClass().getResource("/views/HomeView.fxml"));
 			 Scene scene = new Scene(root,800,600);
 		   Main.stage.setScene(scene);
-		   Main.stage.setTitle("Illinois Tech Airways Login Page");
+		   Main.stage.setTitle("Illinois Tech Airways Home Page");
 		   Main.stage.show();
 		  } catch (Exception e) {
 		  System.out.println("Error in inflating view: " + e.getMessage());
@@ -86,5 +89,28 @@ public class UserController {
 	
 	public void search() {}
 	public void update() {}
+	public void book() {
+		TextInputDialog dialog = new TextInputDialog("16 digit number");
+		dialog.setTitle("Payment Details");
+		dialog.setHeaderText("Debit/Credit Card");
+		dialog.setContentText("Please enter your card number");
+
+		Optional<String> cardno = dialog.showAndWait();
+		if (cardno.isPresent()) {
+			String cardnumber = cardno.get();
+			System.out.println("Card number entered: "+ cardnumber);
+			}
+		try {
+			 AnchorPane root = (AnchorPane) 
+					   FXMLLoader.load(getClass().getResource("/views/TicketView.fxml"));
+			 Scene scene = new Scene(root,800,600);
+		   Main.stage.setScene(scene);
+		   Main.stage.setTitle("Ticket Details");
+		   Main.stage.show();
+	} catch (Exception e) {
+		System.out.println("Error in inflating view: " + e.getMessage());
+	}
+		
+	}
 	
 }

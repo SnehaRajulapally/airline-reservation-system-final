@@ -1,10 +1,13 @@
 package controllers;
 
+import java.util.Optional;
+
 import application.Main;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
@@ -31,10 +34,10 @@ public class AdminController {
 		alert.showAndWait();
 		 try {
 			 AnchorPane root = (AnchorPane) 
-					   FXMLLoader.load(getClass().getResource("/views/LoginView.fxml"));
+					   FXMLLoader.load(getClass().getResource("/views/HomeView.fxml"));
 			 Scene scene = new Scene(root,800,600);
 		   Main.stage.setScene(scene);
-		   Main.stage.setTitle("Illinois Tech Airways Login Page");
+		   Main.stage.setTitle("Illinois Tech Airways Home Page");
 		   Main.stage.show();
 		  } catch (Exception e) {
 		  System.out.println("Error in inflating view: " + e.getMessage());
@@ -81,6 +84,28 @@ public class AdminController {
 		pane1.setVisible(false);
 	}
 	
+	public void book() {
+		TextInputDialog dialog = new TextInputDialog("Enter payment details");
+		dialog.setTitle("Payment Details");
+		dialog.setHeaderText("Debit/Credit Card");
+		dialog.setContentText("Please enter your card number");
+		Optional<String> cardno = dialog.showAndWait();
+		if (cardno.isPresent()) {
+			String cardnumber = cardno.get();
+			System.out.println("Card number entered: "+ cardnumber);
+			}
+		try {
+			 AnchorPane root = (AnchorPane) 
+					   FXMLLoader.load(getClass().getResource("/views/TicketView.fxml"));
+			 Scene scene = new Scene(root,800,600);
+		   Main.stage.setScene(scene);
+		   Main.stage.setTitle("Ticket Details");
+		   Main.stage.show();
+	} catch (Exception e) {
+		System.out.println("Error in inflating view: " + e.getMessage());
+	}
+	}
+		
 	public void create() {}
 	public void update() {}
 	public void search() {}

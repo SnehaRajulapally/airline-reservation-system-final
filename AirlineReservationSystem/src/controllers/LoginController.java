@@ -1,9 +1,11 @@
 package controllers;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import application.Main;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -25,7 +27,24 @@ public class LoginController {
 	private LoginModel model;
     public LoginController() { model = new LoginModel(); }
     
-  
+  public void home()
+  {
+	  Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setTitle("Thank you Message");
+		alert.setHeaderText("Illinois Tech Airways");
+		alert.setContentText("Thank you for choosing us!Please visit again!");
+		alert.showAndWait();
+		 try {
+			 AnchorPane root = (AnchorPane) 
+					   FXMLLoader.load(getClass().getResource("/views/HomeView.fxml"));
+			 Scene scene = new Scene(root,800,600);
+		   Main.stage.setScene(scene);
+		   Main.stage.setTitle("Illinois Tech Airways Home Page");
+		   Main.stage.show();
+		  } catch (Exception e) {
+		  System.out.println("Error in inflating view: " + e.getMessage());
+		  }
+  }
 	public void login() {
 
 		lblError.setText("");
