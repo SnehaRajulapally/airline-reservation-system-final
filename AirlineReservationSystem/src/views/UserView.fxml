@@ -107,7 +107,7 @@
                   <Font size="14.0" />
                </font>
             </Label>
-            <ChoiceBox layoutX="7.0" layoutY="34.0" prefHeight="25.0" prefWidth="126.0" />
+            <ChoiceBox fx:id="From" layoutX="7.0" layoutY="34.0" prefHeight="25.0" prefWidth="126.0" />
             <DatePicker layoutX="305.0" layoutY="34.0" prefHeight="25.0" prefWidth="126.0" />
             <Label layoutX="304.0" layoutY="12.0" text="Date:">
                <font>
@@ -119,8 +119,8 @@
                   <Font size="14.0" />
                </font>
             </Label>
-            <ChoiceBox layoutX="155.0" layoutY="34.0" prefHeight="25.0" prefWidth="126.0" />
-            <ChoiceBox layoutX="459.0" layoutY="34.0" prefHeight="25.0" prefWidth="126.0" />
+            <ChoiceBox fx:id="To" layoutX="155.0" layoutY="34.0" prefHeight="25.0" prefWidth="126.0" />
+            <ChoiceBox fx:id="Class" layoutX="459.0" layoutY="34.0" prefHeight="25.0" prefWidth="126.0" />
             <Button layoutX="234.0" layoutY="70.0" mnemonicParsing="false" onAction="#search" prefWidth="100.0" text="SEARCH" />
             <Button layoutX="238.0" layoutY="446.0" mnemonicParsing="false" onAction="#book" prefWidth="100.0" text="BOOK" />
          </children>
