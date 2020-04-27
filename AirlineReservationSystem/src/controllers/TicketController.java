@@ -1,13 +1,73 @@
 package controllers;
 
+import java.util.ArrayList;
+
 import application.Main;
+import dao.TicketDetailsDao;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.AnchorPane;
+import models.TicketDetailsModel;
+
 
 public class TicketController {
+ 
+	@FXML
+	private Label lblBookingId;
+	@FXML
+	private Label lblFname;
+	@FXML
+	private Label lblLname;
+	@FXML
+	private Label lblEmail;
+	@FXML
+	private Label lblPhone;
+	@FXML
+	private Label lblFrom;
+	@FXML
+	private Label lblTo;
+	@FXML
+	private Label lblDate;
+	@FXML
+	private Label lblTime;
+	@FXML
+	private Label lblClass;
+	@FXML
+	private Label lblStatus;
+	
+	
+public void initialize(String user_name)
+{
+	
+	// Create a DAO instance of the model
+	TicketDetailsDao TicketDetailsDao = new TicketDetailsDao();
+	ArrayList<TicketDetailsModel> arrayList = TicketDetailsDao.getCustomer(user_name);
+	
+	try {
+	for (TicketDetailsModel Ticket : arrayList) 
+	{
+		System.out.println("Displaying Ticket details");
+		//lblBookingId.setText(Integer.toString(Ticket.getlblBookingId()));
+		lblLname.setText(Ticket.getlblLname());
+		/*lblFname.setText(Ticket.getlblFname());
+		lblEmail.setText(Ticket.getlblEmail());
+		lblPhone.setText(Long.toString(Ticket.getlblPhone()));
+		lblFrom.setText(Ticket.getlblFrom());
+		lblTo.setText(Ticket.getlblTo());
+		lblDate.setText(Ticket.getlblDate());
+		lblTime.setText(Ticket.getlblTime());
+		lblStatus.setText(Ticket.getlblStatus());
+		lblClass.setText(Ticket.getlblClass());*/
+	}
+	}catch(Exception e) {
+		System.out.println("Error in fetching ticket details: " + e.getMessage());
+	}
+}
+
 
 	public void logout() {
 		Alert alert = new Alert(AlertType.INFORMATION);

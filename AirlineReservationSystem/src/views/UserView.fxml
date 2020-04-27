@@ -78,7 +78,7 @@
             <TextField fx:id="txtLname" layoutX="381.0" layoutY="19.0" />
             <TextField fx:id="txtEmail" layoutX="121.0" layoutY="103.0" prefHeight="25.0" prefWidth="200.0" />
             <TextField fx:id="txtPhone" layoutX="120.0" layoutY="146.0" />
-            <TextField fx:id="txtAdress" layoutX="120.0" layoutY="191.0" prefHeight="25.0" prefWidth="291.0" />
+            <TextField fx:id="txtAddress" layoutX="120.0" layoutY="191.0" prefHeight="25.0" prefWidth="291.0" />
             <TextField fx:id="txtCity" layoutX="120.0" layoutY="239.0" />
             <TextField fx:id="txtState" layoutX="359.0" layoutY="240.0" />
             <TextField fx:id="txtZipcode" layoutX="120.0" layoutY="285.0" />
@@ -86,7 +86,7 @@
             <Button layoutX="221.0" layoutY="343.0" mnemonicParsing="false" onAction="#update" prefWidth="100.0" text="UPDATE" />
          </children>
       </Pane>
-      <Pane fx:id="pane2" layoutX="220.0" layoutY="106.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="437.0" prefWidth="537.0" visible="false">
+      <Pane fx:id="pane2" layoutX="220.0" layoutY="85.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="458.0" prefWidth="537.0" visible="false">
          <children>
             <Label layoutX="209.0" layoutY="14.0" text="Travel History">
                <font>

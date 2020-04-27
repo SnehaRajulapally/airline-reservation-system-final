@@ -1,26 +1,30 @@
 package controllers;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Optional;
-
 import application.Main;
+import dao.AdminDao;
 import dao.CustomerDao;
+import dao.CustomerViewDao;
+import dao.TicketDetailsDao;
 import javafx.collections.FXCollections;
-//import dao.CustomerDao;
-//import dao.UpdateDao;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
-import javafx.collections.*; 
+import javafx.collections.*;
+import models.Admin;
 import models.Customer;
+import models.TicketDetailsModel;
 import models.User;
 
 
@@ -35,32 +39,43 @@ public class AdminController {
 	@FXML
 	private Pane pane4;
 	@FXML
-	private TextField txtLname;
-
-	@FXML
 	private TextField txtFname;
-
 	@FXML
-	private DatePicker txtDob;
-
-	@FXML
-	private TextField txtPhone;
-
+	private TextField txtLname;
 	@FXML
 	private TextField txtEmail;
-
+	@FXML
+	private TextField txtPhone;
 	@FXML
 	private TextField txtAddress;
-
 	@FXML
 	private TextField txtCity;
-
 	@FXML
 	private TextField txtState;
-
 	@FXML
 	private TextField txtZipcode;
-
+	@FXML
+	private DatePicker txtDob; 
+	
+	@FXML
+	private TextField atxtFname;
+	@FXML
+	private TextField atxtLname;
+	@FXML
+	private TextField atxtEmail;
+	@FXML
+	private TextField atxtPhone;
+	@FXML
+	private TextField atxtAddress;
+	@FXML
+	private TextField atxtCity;
+	@FXML
+	private TextField atxtState;
+	@FXML
+	private TextField atxtZipcode;
+	@FXML
+	private DatePicker atxtDob; 
+	
 	@FXML
 	private TextField txtUsername;
 
@@ -76,11 +91,33 @@ public class AdminController {
 	@FXML
 	private ChoiceBox<String> Class;
 	
+	//@FXML
+	//private Label lblBookingId;
+	@FXML
+	private Label lblFname;
+	@FXML
+	private Label lblLname;
+	@FXML
+	private Label lblEmail;
+	@FXML
+	private Label lblPhone;
+	@FXML
+	private Label lblFrom;
+	@FXML
+	private Label lblTo;
+	@FXML
+	private Label lblDate;
+	@FXML
+	private Label lblTime;
+	@FXML
+	private Label lblClass;
+	@FXML
+	private Label lblStatus;
+	
 
-	static String user_name;
-
-
-
+	static Customer c = new Customer();
+	static String user_name = c.gettxtUsername();
+	
 	public void logout() {
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setTitle("Thank you Message");
@@ -107,7 +144,6 @@ public class AdminController {
 	public AdminController() {
 	
 	}
-	
 	
 
 	public void bookticket() {
@@ -149,8 +185,26 @@ public class AdminController {
 		pane3.setVisible(false);
 		pane2.setVisible(false);
 		pane1.setVisible(true);
-		//UpdateDao U1 = new UpdateDao();
-		//U1.FetchDetails();
+        System.out.println(user_name);
+		
+		// Create a DAO instance of the mode
+		
+		AdminDao AdminDao = new AdminDao();
+		ArrayList<Admin> arrayList = AdminDao.getCustomer(user_name);
+		
+		for (Admin admin : arrayList) 
+		{
+			System.out.println("setting the values");
+			atxtLname.setText(admin.getatxtLname());
+			atxtFname.setText(admin.getatxtFname());
+			atxtDob.setValue(admin.getatxtDob());
+			atxtEmail.setText(admin.getatxtEmail());
+			atxtPhone.setText(Long.toString(admin.getatxtPhone()));
+			atxtAddress.setText(admin.getatxtAddress());
+			atxtCity.setText(admin.getatxtCity());
+			atxtState.setText(admin.getatxtState());
+			atxtZipcode.setText(admin.getatxtZipcode());
+	}
 	}
 
 	public void viewhistory() {
@@ -177,9 +231,31 @@ public class AdminController {
 			Main.stage.setScene(scene);
 			Main.stage.setTitle("Ticket Details");
 			Main.stage.show();
+			TicketController T1 = new TicketController();
+			T1.initialize(user_name);
 		} catch (Exception e) {
 			System.out.println("Error in inflating view: " + e.getMessage());
 		}
+		
+		// Create a DAO instance of the model
+				TicketDetailsDao TicketDetailsDao = new TicketDetailsDao();
+				ArrayList<TicketDetailsModel> arrayList = TicketDetailsDao.getCustomer(user_name);
+				
+				for (TicketDetailsModel Ticket : arrayList) 
+				{
+					System.out.println("Displaying Ticket details");
+					//lblBookingId.setText(Integer.toString(Ticket.getlblBookingId()));
+					lblLname.setText(Ticket.getlblLname());
+					lblFname.setText(Ticket.getlblFname());
+					lblEmail.setText(Ticket.getlblEmail());
+					lblPhone.setText(Long.toString(Ticket.getlblPhone()));
+					lblFrom.setText(Ticket.getlblFrom());
+					lblTo.setText(Ticket.getlblTo());
+					lblDate.setText(Ticket.getlblDate());
+					lblTime.setText(Ticket.getlblTime());
+					lblStatus.setText(Ticket.getlblStatus());
+					lblClass.setText(Ticket.getlblClass());
+				}
 	}
 
 	
@@ -189,7 +265,7 @@ public class AdminController {
 				if (LNAME == null || LNAME.trim().equals("")) {
 					return;
 				}
-		
+		     
 				String FNAME = this.txtFname.getText();
 				if (FNAME == null || FNAME.trim().equals("")) {
 					return;
@@ -199,7 +275,7 @@ public class AdminController {
 				if (DOB == null) {
 					return;
 				}
-			
+			  
 				String EMAIL = this.txtEmail.getText();
 				if (EMAIL == null || EMAIL.trim().equals("")) {
 					return;
@@ -209,17 +285,17 @@ public class AdminController {
 				if (PHONE == null || PHONE.trim().equals("")) {
 					return;
 				}
-	
+			
 				String ADDRESS = this.txtAddress.getText();
 				if (ADDRESS == null || ADDRESS.trim().equals("")) {
 					return;
 				}
-			
+		
 				String CITY = this.txtCity.getText();
 				if (CITY == null || CITY.trim().equals("")) {
 					return;
 				}
-	
+			     System.out.println(CITY);
 				String STATE = this.txtState.getText();
 				if (STATE == null || STATE.trim().equals("")) {
 					return;
@@ -232,7 +308,6 @@ public class AdminController {
 				
 				String USERTYPE = (String) this.UserType.getValue();
 				
-			
 				String USERNAME = this.txtUsername.getText();
 				if (USERNAME == null || USERNAME.trim().equals("")) {
 					return;
@@ -242,13 +317,12 @@ public class AdminController {
 				if (PASSWORD == null || PASSWORD.trim().equals("")) {
 					return;
 				}
-	
 				
 				// Create Customer Object
 				Customer customer = new Customer();
 				// Create User Object
 				User user = new User();
-	
+	  
 				// Set the values from the view
 				customer.settxtLname(LNAME);
 				customer.settxtFname(FNAME);
@@ -262,12 +336,12 @@ public class AdminController {
 				user.settxtUsername(USERNAME);
 				user.settxtPassword(PASSWORD);
                 user.setUserType(USERTYPE);
+         
 				// Create data access instance for customer object
 				CustomerDao C1 = new CustomerDao();
 				C1.CreateDetails(customer);
-
 				C1.CreateUser(user);
-				
+	
 				Alert alert = new Alert(AlertType.INFORMATION);
 				alert.setTitle("Message to Admin");
 				alert.setHeaderText("Success Message!");
@@ -277,10 +351,52 @@ public class AdminController {
 	}
 
 	public void update() {
-		// Create data access instance for customer object
-		//UpdateDao U2 = new UpdateDao();
-		//U2.UpdateDetails();
+		// Extract the data from text fields
+		
+		// Validate the data
+		String LNAME = this.atxtLname.getText();
+		if (LNAME == null || LNAME.trim().equals("")) {
+			return;
+		}
 
+		String FNAME = this.atxtFname.getText();
+		if (FNAME == null || FNAME.trim().equals("")) {
+			return;
+		}
+
+		LocalDate DOB = this.atxtDob.getValue();
+		if (DOB == null) {
+			return;
+		}
+
+		String EMAIL = this.atxtEmail.getText();
+		if (EMAIL == null || EMAIL.trim().equals("")) {
+			return;
+		}
+		
+		String PHONE = this.atxtPhone.getText();
+		String ADDRESS = this.atxtAddress.getText();
+		String CITY = this.atxtCity.getText();
+		String STATE = this.atxtState.getText();
+		String ZIPCODE = this.atxtZipcode.getText();	
+		
+		// Create a Customer object to set the values
+		Customer customer = new Customer();
+		
+		customer.settxtLname(LNAME);
+		customer.settxtFname(FNAME);
+		customer.settxtDob(DOB);
+		customer.settxtEmail(EMAIL);
+		customer.settxtPhone(Long.parseLong(PHONE));
+		customer.settxtAddress(ADDRESS);
+		customer.settxtCity(CITY);
+		customer.settxtState(STATE);
+		customer.settxtZipcode(ZIPCODE);
+		
+		// Create data access instance for customerView object
+		CustomerViewDao c1 = new CustomerViewDao();
+		c1.update(user_name, customer);
+		
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setTitle("Message");
 		System.out.println("Profile updated successfully!");
