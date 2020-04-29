@@ -40,19 +40,19 @@ public class TicketController {
 	private Label lblStatus;
 	
 	
-public void initialize(String user_name)
+public void display(String user_name)
 {
 	
 	// Create a DAO instance of the model
 	TicketDetailsDao TicketDetailsDao = new TicketDetailsDao();
 	ArrayList<TicketDetailsModel> arrayList = TicketDetailsDao.getCustomer(user_name);
-	
+	 
 	try {
-	for (TicketDetailsModel Ticket : arrayList) 
+	for (TicketDetailsModel ticket : arrayList) 
 	{
 		System.out.println("Displaying Ticket details");
 		//lblBookingId.setText(Integer.toString(Ticket.getlblBookingId()));
-		lblLname.setText(Ticket.getlblLname());
+		//lblLname.setText(ticket.getlblLname());
 		/*lblFname.setText(Ticket.getlblFname());
 		lblEmail.setText(Ticket.getlblEmail());
 		lblPhone.setText(Long.toString(Ticket.getlblPhone()));

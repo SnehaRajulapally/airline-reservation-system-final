@@ -232,30 +232,10 @@ public class AdminController {
 			Main.stage.setTitle("Ticket Details");
 			Main.stage.show();
 			TicketController T1 = new TicketController();
-			T1.initialize(user_name);
+			T1.display(user_name);
 		} catch (Exception e) {
 			System.out.println("Error in inflating view: " + e.getMessage());
 		}
-		
-		// Create a DAO instance of the model
-				TicketDetailsDao TicketDetailsDao = new TicketDetailsDao();
-				ArrayList<TicketDetailsModel> arrayList = TicketDetailsDao.getCustomer(user_name);
-				
-				for (TicketDetailsModel Ticket : arrayList) 
-				{
-					System.out.println("Displaying Ticket details");
-					//lblBookingId.setText(Integer.toString(Ticket.getlblBookingId()));
-					lblLname.setText(Ticket.getlblLname());
-					lblFname.setText(Ticket.getlblFname());
-					lblEmail.setText(Ticket.getlblEmail());
-					lblPhone.setText(Long.toString(Ticket.getlblPhone()));
-					lblFrom.setText(Ticket.getlblFrom());
-					lblTo.setText(Ticket.getlblTo());
-					lblDate.setText(Ticket.getlblDate());
-					lblTime.setText(Ticket.getlblTime());
-					lblStatus.setText(Ticket.getlblStatus());
-					lblClass.setText(Ticket.getlblClass());
-				}
 	}
 
 	

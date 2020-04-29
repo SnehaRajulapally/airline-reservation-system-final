@@ -14,9 +14,22 @@ public class TicketDetailsDao extends DBConnect{
 			// Fetch the data from table
 			public ArrayList<TicketDetailsModel> getCustomer(String txtUsername)
 			{
-				String Sql = "Select LNAME,FNAME,EMAIL,PHONE,FROMDEST,TODEST,TRAVELDATE,TRAVELTIME,CLASS,STATUS,BOOKINGID from ars_ticketdetails where UNAME = " 
-						+ "'" + txtUsername +"'" ;	
-				ArrayList<TicketDetailsModel> Ticket = new ArrayList<TicketDetailsModel>();
+				String Sql1 = "Select MAX(BOOKINGID) from ars_ticketdetails  where UNAME = " 
+												+ "'" + txtUsername +"'" ;	
+				ResultSet rs1 =null;
+
+				try
+				{
+					Statement stmt1 = connection.getConnection().createStatement();
+					
+					rs1 = stmt1.executeQuery(Sql1);
+					Integer Bookid;
+					if(rs1.next()){Bookid = rs1.getInt(1);}
+					else{ Bookid = 0;}
+					
+				String Sql = "Select LNAME,FNAME,EMAIL,PHONE,FROMDEST,TODEST,TRAVELDATE,TRAVELTIME,CLASS,STATUS,BOOKINGID from ars_ticketdetails  where BOOKINGID = " 
+						+ "'" + Bookid +"'" ;	
+				ArrayList<TicketDetailsModel> ticket = new ArrayList<TicketDetailsModel>();
 				ResultSet rs = null;
 				
 				try
@@ -42,16 +55,22 @@ public class TicketDetailsDao extends DBConnect{
 						t1.setlblClass(rs.getString(9));
 						t1.setlblStatus(rs.getString(10));
 						t1.setlblBookingId(rs.getInt(11));
-						Ticket.add(t1);
+						ticket.add(t1);
 						System.out.println("Sucessfully fetched ticket details from database");
 					}
-					return Ticket;		
+					return ticket;		
 				}
 				catch (SQLException e) 
 				{
 					System.out.println("Error while fetching the user Information: " + e.getMessage());
 					return null;
 				}
+				}catch (SQLException e) 
+				{
+					System.out.println("Error while fetching latest booking Id: " + e.getMessage());
+					return null;
+				}
+			   
 			}
 			
 	

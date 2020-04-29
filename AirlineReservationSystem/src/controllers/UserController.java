@@ -13,7 +13,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.Alert.AlertType;
@@ -220,7 +219,7 @@ public class UserController {
 			Main.stage.setTitle("Ticket Details");
 			Main.stage.show();
 			TicketController T1 = new TicketController();
-			T1.initialize(user_name);
+			T1.display(user_name);
 		} catch (Exception e) {
 			System.out.println("Error in inflating view: " + e.getMessage());
 		}
