@@ -14,11 +14,9 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import models.Customer;
 import models.TicketDetailsModel;
-import models.User;
-
 
 public class TicketController {
- 
+
 	@FXML
 	private Label lblBookingId;
 	@FXML
@@ -45,49 +43,46 @@ public class TicketController {
 	private Label lblPrice;
 	@FXML
 	private Pane pane1;
-	
+
 	static Customer c = new Customer();
 	static String user_name = c.gettxtUsername();
-	
+
 	public static void setUsername(String username) {
 		user_name = username;
 		System.out.println("Welcome User: " + user_name + "!");
 	}
 
-public void viewTicket()
-{
-	  //TicketDetailsModel cust = new TicketDetailsModel();
-	 // String user_name = cust.gettxtUsername();
+	public void viewTicket() {
+		// TicketDetailsModel cust = new TicketDetailsModel();
+		// String user_name = cust.gettxtUsername();
 
-      System.out.println(user_name);
-	  pane1.setVisible(true);
-	  //String user_name = "admin";
-	  // Create a DAO instance of the model
-	  TicketDetailsDao TicketDetailsDao = new TicketDetailsDao();
-	  ArrayList<TicketDetailsModel> arrayList = TicketDetailsDao.getCustomer(user_name);
-	 
-	try {
-	for (TicketDetailsModel ticket : arrayList) 
-	{
-		System.out.println("Displaying Ticket details");
-	    lblBookingId.setText(Integer.toString(ticket.getlblBookingId()));
-		lblLname.setText(ticket.getlblLname());
-		lblFname.setText(ticket.getlblFname());
-		lblEmail.setText(ticket.getlblEmail());
-		lblPhone.setText(Long.toString(ticket.getlblPhone()));
-		lblFrom.setText(ticket.getlblFrom());
-		lblTo.setText(ticket.getlblTo());
-		lblDate.setText(ticket.getlblDate());
-		lblTime.setText(ticket.getlblTime());
-		lblStatus.setText(ticket.getlblStatus());
-		lblClass.setText(ticket.getlblClass());
-		lblPrice.setText(ticket.getlblPrice());
-	}
-	}catch(Exception e) {
-		System.out.println("Error in setting ticket details: " + e.getMessage());
-	}
-}
+		System.out.println(user_name);
+		pane1.setVisible(true);
+		// String user_name = "admin";
+		// Create a DAO instance of the model
+		TicketDetailsDao TicketDetailsDao = new TicketDetailsDao();
+		ArrayList<TicketDetailsModel> arrayList = TicketDetailsDao.getCustomer(user_name);
 
+		try {
+			for (TicketDetailsModel ticket : arrayList) {
+				System.out.println("Displaying Ticket details");
+				lblBookingId.setText(Integer.toString(ticket.getlblBookingId()));
+				lblLname.setText(ticket.getlblLname());
+				lblFname.setText(ticket.getlblFname());
+				lblEmail.setText(ticket.getlblEmail());
+				lblPhone.setText(Long.toString(ticket.getlblPhone()));
+				lblFrom.setText(ticket.getlblFrom());
+				lblTo.setText(ticket.getlblTo());
+				lblDate.setText(ticket.getlblDate());
+				lblTime.setText(ticket.getlblTime());
+				lblStatus.setText(ticket.getlblStatus());
+				lblClass.setText(ticket.getlblClass());
+				lblPrice.setText(ticket.getlblPrice());
+			}
+		} catch (Exception e) {
+			System.out.println("Error in setting ticket details: " + e.getMessage());
+		}
+	}
 
 	public void logout() {
 		Alert alert = new Alert(AlertType.INFORMATION);

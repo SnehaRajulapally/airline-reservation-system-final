@@ -5,6 +5,8 @@
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -31,6 +33,20 @@
       <Button layoutX="48.0" layoutY="260.0" mnemonicParsing="false" onAction="#bookticket" prefHeight="25.0" prefWidth="120.0" text="BOOK TICKET" />
       <Pane fx:id="pane4" layoutX="178.0" layoutY="79.0" prefHeight="477.0" prefWidth="611.0">
          <children>
+            <Pane fx:id="pane5" layoutY="122.0" prefHeight="295.0" prefWidth="611.0" visible="false">
+               <children>
+                  <TableView fx:id="tblFlights" layoutX="2.0" layoutY="2.0" onMouseClicked="#click1" prefHeight="289.0" prefWidth="604.0">
+                    <columns>
+                      <TableColumn fx:id="fromId" prefWidth="100.0" style="-fx-alignment: center;" text="FROM" />
+                      <TableColumn fx:id="toId" prefWidth="100.0" style="-fx-alignment: center;" text="TO" />
+                        <TableColumn fx:id="dateId" prefWidth="100.0" style="-fx-alignment: center;" text="DATE" />
+                        <TableColumn fx:id="timeId" prefWidth="100.0" style="-fx-alignment: center;" text="TIME" />
+                        <TableColumn fx:id="classId" prefWidth="100.0" style="-fx-alignment: center;" text="CLASS" />
+                        <TableColumn fx:id="priceId" prefWidth="102.0" style="-fx-alignment: center;" text="PRICE" />
+                    </columns>
+                  </TableView>
+               </children>
+            </Pane>
             <Label layoutX="7.0" layoutY="11.0" text="From:">
                <font>
                   <Font size="14.0" />
@@ -42,7 +58,7 @@
                </font>
             </Label>
             <ChoiceBox fx:id="From" layoutX="7.0" layoutY="34.0" prefHeight="25.0" prefWidth="126.0" />
-            <DatePicker layoutX="304.0" layoutY="34.0" prefHeight="25.0" prefWidth="126.0" />
+            <DatePicker fx:id="Date" layoutX="304.0" layoutY="34.0" prefHeight="25.0" prefWidth="126.0" />
             <Label layoutX="303.0" layoutY="12.0" text="Date:">
                <font>
                   <Font size="14.0" />
@@ -56,7 +72,7 @@
             <ChoiceBox fx:id="To" layoutX="154.0" layoutY="34.0" prefHeight="25.0" prefWidth="126.0" />
             <ChoiceBox fx:id="Class" layoutX="451.0" layoutY="34.0" prefHeight="25.0" prefWidth="126.0" />
             <Button layoutX="234.0" layoutY="70.0" mnemonicParsing="false" onAction="#search" prefWidth="100.0" text="SEARCH" />
-            <Button layoutX="240.0" layoutY="438.0" mnemonicParsing="false" onAction="#book" prefWidth="100.0" text="BOOK" />
+            <Button fx:id="bookBtn" layoutX="240.0" layoutY="438.0" mnemonicParsing="false" onAction="#book" prefWidth="100.0" text="BOOK" />
          </children>
       </Pane>
       <Pane fx:id="pane1" layoutX="226.0" layoutY="96.0" prefHeight="400.0" prefWidth="545.0" visible="false">
@@ -195,13 +211,25 @@
             <PasswordField fx:id="txtPassword" layoutX="120.0" layoutY="367.0" />
          </children>
       </Pane>
-      <Pane fx:id="pane3" layoutX="230.0" layoutY="86.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="467.0" prefWidth="537.0" visible="false">
+      <Pane fx:id="pane3" layoutX="178.0" layoutY="86.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="467.0" prefWidth="589.0" visible="false">
          <children>
-            <Label layoutX="212.0" layoutY="14.0" text="Travel History">
+            <Label layoutX="240.0" layoutY="14.0" text="Travel History">
                <font>
                   <Font name="System Bold Italic" size="18.0" />
                </font>
             </Label>
+            <TableView fx:id="tblHistory" layoutY="60.0" onMouseClicked="#click2" prefHeight="321.0" prefWidth="589.0">
+              <columns>
+                  <TableColumn fx:id="BookId" prefWidth="60.0" style="-fx-alignment: center;" text="Id" />
+                  <TableColumn fx:id="LNameId" prefWidth="90.0" style="-fx-alignment: center;" text="LastName" />
+                <TableColumn fx:id="FromId" prefWidth="90.0" style="-fx-alignment: center;" text="FROM" />
+                <TableColumn fx:id="ToId" prefWidth="90.0" style="-fx-alignment: center;" text="TO" />
+                  <TableColumn fx:id="DateId" style="-fx-alignment: center;" text="DATE" />
+                  <TableColumn fx:id="TimeId" prefWidth="90.0" style="-fx-alignment: center;" text="TIME" />
+                  <TableColumn fx:id="ClassId" prefWidth="90.0" style="-fx-alignment: center;" text="CLASS" />
+              </columns>
+            </TableView>
+            <Button fx:id="deleteBtn" layoutX="240.0" layoutY="420.0" mnemonicParsing="false" onAction="#delete" prefHeight="27.0" prefWidth="100.0" text="DELETE" />
          </children>
       </Pane>
    </children>
