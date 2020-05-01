@@ -3,7 +3,7 @@ package controllers;
 import java.util.ArrayList;
 
 import application.Main;
-import dao.TicketDetailsDao;
+import dao.TicketViewDao;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -12,8 +12,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
-import models.Customer;
-import models.TicketDetailsModel;
+import models.UserProfileModel;
+import models.TicketViewModel;
 
 public class TicketController {
 
@@ -44,7 +44,7 @@ public class TicketController {
 	@FXML
 	private Pane pane1;
 
-	static Customer c = new Customer();
+	static UserProfileModel c = new UserProfileModel();
 	static String user_name = c.gettxtUsername();
 
 	public static void setUsername(String username) {
@@ -60,11 +60,11 @@ public class TicketController {
 		pane1.setVisible(true);
 		// String user_name = "admin";
 		// Create a DAO instance of the model
-		TicketDetailsDao TicketDetailsDao = new TicketDetailsDao();
-		ArrayList<TicketDetailsModel> arrayList = TicketDetailsDao.getCustomer(user_name);
+		TicketViewDao TicketDetailsDao = new TicketViewDao();
+		ArrayList<TicketViewModel> arrayList = TicketDetailsDao.getCustomer(user_name);
 
 		try {
-			for (TicketDetailsModel ticket : arrayList) {
+			for (TicketViewModel ticket : arrayList) {
 				System.out.println("Displaying Ticket details");
 				lblBookingId.setText(Integer.toString(ticket.getlblBookingId()));
 				lblLname.setText(ticket.getlblLname());

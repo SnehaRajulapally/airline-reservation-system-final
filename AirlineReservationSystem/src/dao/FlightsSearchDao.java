@@ -6,17 +6,17 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import models.FlightsModel;
+import models.FlightSearchModel;
 
-public class FlightsDao extends DBConnect {
+public class FlightsSearchDao extends DBConnect {
 
 	// Declare DB objects
 	DBConnect connection = new DBConnect();
 
-	public ArrayList<FlightsModel> getFlights(String from_place, String to_place, String date, String in_class) {
+	public ArrayList<FlightSearchModel> getFlights(String from_place, String to_place, String date, String in_class) {
 
 		System.out.println("Starting to fetch the Flights details");
-		ArrayList<FlightsModel> flights = new ArrayList<FlightsModel>();
+		ArrayList<FlightSearchModel> flights = new ArrayList<FlightSearchModel>();
 
 		ResultSet rs = null;
 
@@ -37,7 +37,7 @@ public class FlightsDao extends DBConnect {
 			rs = statement.executeQuery();
 
 			while (rs.next()) {
-				FlightsModel F1 = new FlightsModel();
+				FlightSearchModel F1 = new FlightSearchModel();
 
 				F1.setFromId(rs.getString(1));
 				F1.setToId(rs.getString(2));

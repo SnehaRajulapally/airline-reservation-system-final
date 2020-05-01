@@ -7,10 +7,10 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import application.Main;
+import dao.LoginDao;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
-import models.LoginModel;
 
 public class LoginController {
 
@@ -23,10 +23,10 @@ public class LoginController {
 	@FXML
 	private Label lblError;
 
-	private LoginModel model;
+	private LoginDao model;
 
 	public LoginController() {
-		model = new LoginModel();
+		model = new LoginDao();
 	}
 
 	public void home() {

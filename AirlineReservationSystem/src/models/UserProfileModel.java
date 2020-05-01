@@ -2,7 +2,7 @@ package models;
 
 import java.time.LocalDate;
 
-public class Customer {
+public class UserProfileModel {
 
 	// instance fields
 	private String txtUsername;

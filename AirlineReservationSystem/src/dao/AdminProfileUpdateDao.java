@@ -7,18 +7,18 @@ import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-import models.Customer;
+import models.AdminProfileModel;
 
-public class CustomerViewDao extends DBConnect {
+public class AdminProfileUpdateDao extends DBConnect {
 
 	// Declare DB objects
 	DBConnect connection = new DBConnect();
 
 	// Fetch the data from table
-	public ArrayList<Customer> getCustomer(String txtUsername) {
+	public ArrayList<AdminProfileModel> getCustomer(String atxtUsername) {
 		String Sql = "Select LNAME, FNAME, DOB, EMAIL, PHONE, ADDRESS, CITY, STATE, ZIPCODE from ars_customers1 where UNAME = "
-				+ "'" + txtUsername + "'";
-		ArrayList<Customer> customer = new ArrayList<Customer>();
+				+ "'" + atxtUsername + "'";
+		ArrayList<AdminProfileModel> admin = new ArrayList<AdminProfileModel>();
 		ResultSet rs = null;
 
 		try {
@@ -29,21 +29,21 @@ public class CustomerViewDao extends DBConnect {
 			rs = stmt.executeQuery(Sql);
 
 			if (rs.next()) {
-				Customer c1 = new Customer();
+				AdminProfileModel a1 = new AdminProfileModel();
 				// set result set to the text fields
-				c1.settxtLname(rs.getString(1));
-				c1.settxtFname(rs.getString(2));
-				c1.settxtDob(LocalDate.parse(rs.getString(3)));
-				c1.settxtEmail(rs.getString(4));
-				c1.settxtPhone(rs.getLong(5));
-				c1.settxtAddress(rs.getString(6));
-				c1.settxtCity(rs.getString(7));
-				c1.settxtState(rs.getString(8));
-				c1.settxtZipcode(rs.getString(9));
-				customer.add(c1);
+				a1.setatxtLname(rs.getString(1));
+				a1.setatxtFname(rs.getString(2));
+				a1.setatxtDob(LocalDate.parse(rs.getString(3)));
+				a1.setatxtEmail(rs.getString(4));
+				a1.setatxtPhone(rs.getLong(5));
+				a1.setatxtAddress(rs.getString(6));
+				a1.setatxtCity(rs.getString(7));
+				a1.setatxtState(rs.getString(8));
+				a1.setatxtZipcode(rs.getString(9));
+				admin.add(a1);
 				System.out.println("Sucessfully fetched data from database");
 			}
-			return customer;
+			return admin;
 		} catch (SQLException e) {
 			System.out.println("Error while fetching the user Information: " + e.getMessage());
 			return null;
@@ -51,7 +51,7 @@ public class CustomerViewDao extends DBConnect {
 	}
 
 	// Update the database
-	public Customer update(String txtUsername, Customer customer) {
+	public AdminProfileModel update(String txtUsername, AdminProfileModel admin) {
 		// Query to update the customer info in database
 		String query = "Update ars_customers1 set LNAME=?, FNAME =?, DOB=?, EMAIL=?, PHONE=?, ADDRESS=?, CITY=?, STATE=?, ZIPCODE=? "
 				+ "where UNAME = " + "'" + txtUsername + "'";
@@ -60,27 +60,27 @@ public class CustomerViewDao extends DBConnect {
 		try {
 			PreparedStatement statement = connection.getConnection().prepareStatement(query,
 					Statement.RETURN_GENERATED_KEYS);
-			statement.setString(1, customer.gettxtLname());
-			statement.setString(2, customer.gettxtFname());
-			statement.setDate(3, java.sql.Date.valueOf(customer.gettxtDob()));
-			statement.setString(4, customer.gettxtEmail());
-			statement.setLong(5, customer.gettxtPhone());
-			statement.setString(6, customer.gettxtAddress());
-			statement.setString(7, customer.gettxtCity());
-			statement.setString(8, customer.gettxtState());
-			statement.setString(9, customer.gettxtZipcode());
+			statement.setString(1, admin.getatxtLname());
+			statement.setString(2, admin.getatxtFname());
+			statement.setDate(3, java.sql.Date.valueOf(admin.getatxtDob()));
+			statement.setString(4, admin.getatxtEmail());
+			statement.setLong(5, admin.getatxtPhone());
+			statement.setString(6, admin.getatxtAddress());
+			statement.setString(7, admin.getatxtCity());
+			statement.setString(8, admin.getatxtState());
+			statement.setString(9, admin.getatxtZipcode());
 
 			// Execute the update
 			statement.executeUpdate();
 
-			System.out.println("Sucessfully updated info in the database");
+			System.out.println("Sucessfully updated customer info in the database");
 
 		} catch (SQLException e) {
-			customer = null;
+			admin = null;
 			System.out.println("Error Updating customer Info: " + e.getMessage());
 		}
 
-		return customer;
+		return admin;
 	}
 
 }

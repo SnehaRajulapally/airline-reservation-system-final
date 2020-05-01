@@ -5,7 +5,7 @@ import java.time.LocalDate;
 
 //import java.time.Date;
 
-import dao.CustomerDao;
+import dao.UserProfileUpdateDao;
 import application.Main;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,8 +15,8 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.AnchorPane;
-import models.Customer;
-import models.User;
+import models.UserProfileModel;
+import models.LoginModel;
 
 public class SignUpController {
 	@FXML
@@ -111,11 +111,12 @@ public class SignUpController {
 		}
 
 		// Create Customer Object
-		Customer customer = new Customer();
+		UserProfileModel customer = new UserProfileModel();
 		// Create User Object
-		User user = new User();
+		LoginModel user = new LoginModel();
 
 		// Set the values from the view
+		customer.settxtUsername(USERNAME);
 		customer.settxtLname(LNAME);
 		customer.settxtFname(FNAME);
 		customer.settxtDob(DOB);
@@ -129,7 +130,7 @@ public class SignUpController {
 		user.settxtPassword(PASSWORD);
 
 		// Create data access instance for customer object
-		CustomerDao C1 = new CustomerDao();
+		UserProfileUpdateDao C1 = new UserProfileUpdateDao();
 		C1.CreateDetails(customer);
 
 		C1.CreateUser(user);

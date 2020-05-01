@@ -4,14 +4,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import models.TicketDetailsModel;
+import models.TicketViewModel;
 
-public class TicketDetailsDao extends DBConnect {
+public class TicketViewDao extends DBConnect {
 	// Declare DB objects
 	DBConnect connection = new DBConnect();
 
 	// Fetch the data from table
-	public ArrayList<TicketDetailsModel> getCustomer(String txtUsername) {
+	public ArrayList<TicketViewModel> getCustomer(String txtUsername) {
 		String Sql1 = "Select MAX(BOOKINGID) from ars_ticketdetails  where UNAME = " + "'" + txtUsername + "'";
 		ResultSet rs1 = null;
 
@@ -28,7 +28,7 @@ public class TicketDetailsDao extends DBConnect {
 
 			String Sql = "Select LNAME,FNAME,EMAIL,PHONE,FROMDEST,TODEST,TRAVELDATE,TRAVELTIME,CLASS,PRICE,STATUS,BOOKINGID from ars_ticketdetails  where BOOKINGID = "
 					+ "'" + Bookid + "'";
-			ArrayList<TicketDetailsModel> ticket = new ArrayList<TicketDetailsModel>();
+			ArrayList<TicketViewModel> ticket = new ArrayList<TicketViewModel>();
 			ResultSet rs = null;
 
 			try {
@@ -38,7 +38,7 @@ public class TicketDetailsDao extends DBConnect {
 
 				rs = stmt.executeQuery(Sql);
 				if (rs.next()) {
-					TicketDetailsModel t1 = new TicketDetailsModel();
+					TicketViewModel t1 = new TicketViewModel();
 					// set result set to the text fields
 					t1.setlblLname(rs.getString(1));
 					t1.setlblFname(rs.getString(2));

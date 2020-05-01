@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 import models.HistoryModel;
 
-public class HistoryDao extends DBConnect {
+public class UserHistoryDao extends DBConnect {
 
 	// Declare DB objects
 	DBConnect connection = new DBConnect();

@@ -1,37 +1,51 @@
 package models;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import dao.DBConnect;
+public class LoginModel {
+	// instance fields
+	private String txtUsername;
+	private String txtPassword;
+	private String UserType;
 
-public class LoginModel extends DBConnect {
-
-	private Boolean admin;
-
-	public Boolean isAdmin() {
-		return admin;
+	// Getters and Setters for the fields
+	/**
+	 * @return the txtUname
+	 */
+	public String gettxtUsername() {
+		return txtUsername;
 	}
 
-	public void setAdmin(Boolean admin) {
-		this.admin = admin;
+	/**
+	 * @param txtUname the txtUname to set
+	 */
+	public void settxtUsername(String txtUsername) {
+		this.txtUsername = txtUsername;
 	}
 
-	public Boolean getCredentials(String username, String password) {
-
-		String query = "SELECT * FROM ars_users WHERE username = ? and password = ?;";
-		try (PreparedStatement stmt = connection.prepareStatement(query)) {
-			stmt.setString(1, username);
-			stmt.setString(2, password);
-			ResultSet rs = stmt.executeQuery();
-			if (rs.next()) {
-				setAdmin(rs.getBoolean("admin"));
-				return true;
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return false;
+	/**
+	 * @return the txtPassword
+	 */
+	public String gettxtPassword() {
+		return txtPassword;
 	}
 
+	/**
+	 * @param txtPassword the txtPassword to set
+	 */
+	public void settxtPassword(String txtPassword) {
+		this.txtPassword = txtPassword;
+	}
+
+	/**
+	 * @return the UserTypeChoicBox
+	 */
+	public String getUserType() {
+		return UserType;
+	}
+
+	/**
+	 * @param UserTypethe UserType to set
+	 */
+	public void setUserType(String UserType) {
+		this.UserType = UserType;
+	}
 }

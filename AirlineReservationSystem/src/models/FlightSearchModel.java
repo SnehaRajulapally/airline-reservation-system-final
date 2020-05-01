@@ -2,7 +2,7 @@ package models;
 
 import java.time.LocalDate;
 
-public class FlightsModel {
+public class FlightSearchModel {
 
 	// instance fields
 	private String txtFrom;

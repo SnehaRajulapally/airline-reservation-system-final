@@ -4,14 +4,14 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import models.Customer;
-import models.User;
+import models.UserProfileModel;
+import models.LoginModel;
 
-public class CustomerDao extends DBConnect {
+public class UserProfileUpdateDao extends DBConnect {
 	// Declare DB objects
 	DBConnect connection = new DBConnect();
 
-	public void CreateDetails(Customer customer) {
+	public void CreateDetails(UserProfileModel customer) {
 		// Query to insert new customer into database
 		String sql1 = "INSERT INTO ars_customers1(UNAME, LNAME, FNAME, DOB, EMAIL, PHONE, ADDRESS, CITY, STATE, ZIPCODE) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
@@ -42,7 +42,7 @@ public class CustomerDao extends DBConnect {
 		}
 	}
 
-	public void CreateUser(User user) {
+	public void CreateUser(LoginModel user) {
 		String sql2 = "INSERT INTO ars_users(username, password, admin) VALUES (?, ?, ?)";
 
 		try {

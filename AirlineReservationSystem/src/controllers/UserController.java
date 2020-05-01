@@ -8,10 +8,10 @@ import java.util.ResourceBundle;
 import java.util.concurrent.atomic.AtomicLong;
 import javafx.fxml.Initializable;
 import application.Main;
-import dao.CustomerViewDao;
-import dao.FlightsDao;
-import dao.HistoryDao;
-import dao.TicketDao;
+import dao.UserProfileViewDao;
+import dao.FlightsSearchDao;
+import dao.UserHistoryDao;
+import dao.TicketBookDao;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -31,8 +31,8 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
-import models.Customer;
-import models.FlightsModel;
+import models.UserProfileModel;
+import models.FlightSearchModel;
 import models.HistoryModel;
 import models.TicketBookModel;
 
@@ -75,19 +75,19 @@ public class UserController implements Initializable {
 	@FXML
 	private DatePicker Date;
 	@FXML
-	private TableView<FlightsModel> tblFlights;
+	private TableView<FlightSearchModel> tblFlights;
 	@FXML
-	private TableColumn<FlightsModel, String> fromId;
+	private TableColumn<FlightSearchModel, String> fromId;
 	@FXML
-	private TableColumn<FlightsModel, String> toId;
+	private TableColumn<FlightSearchModel, String> toId;
 	@FXML
-	private TableColumn<FlightsModel, String> dateId;
+	private TableColumn<FlightSearchModel, String> dateId;
 	@FXML
-	private TableColumn<FlightsModel, String> timeId;
+	private TableColumn<FlightSearchModel, String> timeId;
 	@FXML
-	private TableColumn<FlightsModel, String> classId;
+	private TableColumn<FlightSearchModel, String> classId;
 	@FXML
-	private TableColumn<FlightsModel, String> priceId;
+	private TableColumn<FlightSearchModel, String> priceId;
 	@FXML
 	private TableColumn<HistoryModel, String> BookId;
 	@FXML
@@ -116,7 +116,7 @@ public class UserController implements Initializable {
 	private static String F_CLASS;
 	private static String F_PRICE;
 
-	static Customer c = new Customer();
+	static UserProfileModel c = new UserProfileModel();
 	static String user_name = c.gettxtUsername();
 	final ObservableList<String> FromL = FXCollections.observableArrayList("Chicago", "New York", "Seattle", "Orlando",
 			"Dallas", "California");
@@ -136,12 +136,12 @@ public class UserController implements Initializable {
 		bookBtn.setDisable(true);
 
 		// Code for tblFlights table view
-		fromId.setCellValueFactory(new PropertyValueFactory<FlightsModel, String>("fromId"));
-		toId.setCellValueFactory(new PropertyValueFactory<FlightsModel, String>("toId"));
-		dateId.setCellValueFactory(new PropertyValueFactory<FlightsModel, String>("dateId"));
-		timeId.setCellValueFactory(new PropertyValueFactory<FlightsModel, String>("timeId"));
-		classId.setCellValueFactory(new PropertyValueFactory<FlightsModel, String>("classId"));
-		priceId.setCellValueFactory(new PropertyValueFactory<FlightsModel, String>("priceId"));
+		fromId.setCellValueFactory(new PropertyValueFactory<FlightSearchModel, String>("fromId"));
+		toId.setCellValueFactory(new PropertyValueFactory<FlightSearchModel, String>("toId"));
+		dateId.setCellValueFactory(new PropertyValueFactory<FlightSearchModel, String>("dateId"));
+		timeId.setCellValueFactory(new PropertyValueFactory<FlightSearchModel, String>("timeId"));
+		classId.setCellValueFactory(new PropertyValueFactory<FlightSearchModel, String>("classId"));
+		priceId.setCellValueFactory(new PropertyValueFactory<FlightSearchModel, String>("priceId"));
 
 		// auto adjust width of columns depending on their content
 		tblFlights.setColumnResizePolicy((param) -> true);
@@ -214,10 +214,10 @@ public class UserController implements Initializable {
 		System.out.println(user_name);
 
 		// Create a DAO instance of the model
-		CustomerViewDao customerDao = new CustomerViewDao();
-		ArrayList<Customer> arrayList = customerDao.getCustomer(user_name);
+		UserProfileViewDao customerDao = new UserProfileViewDao();
+		ArrayList<UserProfileModel> arrayList = customerDao.getCustomer(user_name);
 
-		for (Customer customer : arrayList) {
+		for (UserProfileModel customer : arrayList) {
 			System.out.println("setting the values");
 			txtLname.setText(customer.gettxtLname());
 			txtFname.setText(customer.gettxtFname());
@@ -239,7 +239,7 @@ public class UserController implements Initializable {
 		pane4.setVisible(false);
 
 		// Create data access instance for History data access object
-		HistoryDao H1 = new HistoryDao();
+		UserHistoryDao H1 = new UserHistoryDao();
 
 		try {
 			tblHistory.getItems().setAll(H1.getHistory(user_name));
@@ -272,7 +272,7 @@ public class UserController implements Initializable {
 		String F_CLASS = this.Class.getValue();
 
 		// Create data access instance for Flights object
-		FlightsDao F1 = new FlightsDao();
+		FlightsSearchDao F1 = new FlightsSearchDao();
 
 		try {
 			tblFlights.getItems().setAll(F1.getFlights(F_FROM, F_TO, F_DATE, F_CLASS));
@@ -336,7 +336,7 @@ public class UserController implements Initializable {
 		String ZIPCODE = this.txtZipcode.getText();
 
 		// Create a Customer object to set the values
-		Customer customer = new Customer();
+		UserProfileModel customer = new UserProfileModel();
 
 		customer.settxtLname(LNAME);
 		customer.settxtFname(FNAME);
@@ -349,7 +349,7 @@ public class UserController implements Initializable {
 		customer.settxtZipcode(ZIPCODE);
 
 		// Create data access instance for customerView object
-		CustomerViewDao c1 = new CustomerViewDao();
+		UserProfileViewDao c1 = new UserProfileViewDao();
 		c1.update(user_name, customer);
 
 		Alert alert = new Alert(AlertType.INFORMATION);
@@ -361,6 +361,7 @@ public class UserController implements Initializable {
 	}
 
 	public void book() {
+		try {
 		TextInputDialog dialog = new TextInputDialog("Enter numbers");
 		dialog.setTitle("Payment Details");
 		dialog.setHeaderText("Debit/Credit Card");
@@ -369,7 +370,7 @@ public class UserController implements Initializable {
 		String card = cardno.get();
 		if (cardno.isPresent() && !cardno.get().isEmpty() && (card.matches("\\d*"))) {
 			System.out.println("Card number entered: " + card);
-			TicketDao TB = new TicketDao();
+			TicketBookDao TB = new TicketBookDao();
 
 			try {
 				ArrayList<TicketBookModel> arrayList = TB.getCustomer(user_name);
@@ -407,7 +408,7 @@ public class UserController implements Initializable {
 			} catch (Exception e) {
 				System.out.println("Not able to book the ticket" + e.getMessage());
 			}
-		}
+		
 		try {
 			AnchorPane root = (AnchorPane) FXMLLoader.load(getClass().getResource("/views/TicketView.fxml"));
 			System.out.println("Launched Ticket Details Screen");
@@ -419,5 +420,10 @@ public class UserController implements Initializable {
 		} catch (Exception e) {
 			System.out.println("Error in inflating view: " + e.getMessage());
 		}
+		
+		}
+	}catch(Exception e) {
+		System.out.println("Error in booking ticket: " + e.getMessage());
 	}
+}
 }

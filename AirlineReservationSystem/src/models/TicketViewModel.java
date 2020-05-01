@@ -1,6 +1,6 @@
 package models;
 
-public class TicketDetailsModel {
+public class TicketViewModel {
 
 	// instance fields
 	private String txtUsername;

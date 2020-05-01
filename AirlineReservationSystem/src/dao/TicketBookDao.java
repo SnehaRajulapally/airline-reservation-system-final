@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 import models.TicketBookModel;
 
-public class TicketDao extends DBConnect {
+public class TicketBookDao extends DBConnect {
 	// Declare DB objects
 	DBConnect connection = new DBConnect();
 
