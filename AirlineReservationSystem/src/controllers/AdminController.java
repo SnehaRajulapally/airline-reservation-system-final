@@ -373,68 +373,68 @@ public class AdminController implements Initializable {
 
 	public void book() {
 		try {
-		TextInputDialog dialog = new TextInputDialog("Enter numbers");
-		dialog.setTitle("Payment Details");
-		dialog.setHeaderText("Debit/Credit Card");
-		dialog.setContentText("Please enter your card number");
-		Optional<String> cardno = dialog.showAndWait();
-		String card = cardno.get();
-		if (cardno.isPresent() && !cardno.get().isEmpty() && (card.matches("\\d*"))) {
-			System.out.println("Card number entered: " + card);
-			TicketBookDao T1 = new TicketBookDao();
+			TextInputDialog dialog = new TextInputDialog("Enter numbers");
+			dialog.setTitle("Payment Details");
+			dialog.setHeaderText("Debit/Credit Card");
+			dialog.setContentText("Please enter your card number");
+			Optional<String> cardno = dialog.showAndWait();
+			String card = cardno.get();
+			if (cardno.isPresent() && !cardno.get().isEmpty() && (card.matches("\\d*"))) {
+				System.out.println("Card number entered: " + card);
+				TicketBookDao T1 = new TicketBookDao();
 
-			try {
-				ArrayList<TicketBookModel> arrayList = T1.getCustomer(user_name);
+				try {
+					ArrayList<TicketBookModel> arrayList = T1.getCustomer(user_name);
 
-				for (TicketBookModel ticket : arrayList) {
+					for (TicketBookModel ticket : arrayList) {
 
-					last_name = ticket.getLast_name();
-					first_name = ticket.getFirst_name();
-					email = ticket.getEmail();
-					phone = Long.parseLong(ticket.getPhone());
+						last_name = ticket.getLast_name();
+						first_name = ticket.getFirst_name();
+						email = ticket.getEmail();
+						phone = Long.parseLong(ticket.getPhone());
 
+					}
+
+					System.out.println(last_name);
+					System.out.println(first_name);
+					System.out.println(email);
+					System.out.println(phone);
+					System.out.println(F_FROM);
+					System.out.println(F_TO);
+					System.out.println(F_DATE);
+					System.out.println(F_TIME);
+					System.out.println(F_CLASS);
+					System.out.println(F_PRICE);
+
+					T1.BookTicket(user_name, last_name, first_name, email, phone, F_FROM, F_TO, F_DATE, F_TIME, F_CLASS,
+							F_PRICE);
+
+					Alert alert = new Alert(AlertType.INFORMATION);
+					alert.setTitle("Message");
+					System.out.println("Ticket Booked successfully!");
+					alert.setHeaderText("Success message");
+					alert.setContentText("Ticket Booked successfully!");
+					alert.showAndWait();
+
+				} catch (Exception e) {
+					System.out.println("Not able to book the ticket" + e.getMessage());
 				}
 
-				System.out.println(last_name);
-				System.out.println(first_name);
-				System.out.println(email);
-				System.out.println(phone);
-				System.out.println(F_FROM);
-				System.out.println(F_TO);
-				System.out.println(F_DATE);
-				System.out.println(F_TIME);
-				System.out.println(F_CLASS);
-				System.out.println(F_PRICE);
-
-				T1.BookTicket(user_name, last_name, first_name, email, phone, F_FROM, F_TO, F_DATE, F_TIME, F_CLASS,
-						F_PRICE);
-
-				Alert alert = new Alert(AlertType.INFORMATION);
-				alert.setTitle("Message");
-				System.out.println("Ticket Booked successfully!");
-				alert.setHeaderText("Success message");
-				alert.setContentText("Ticket Booked successfully!");
-				alert.showAndWait();
-
-			} catch (Exception e) {
-				System.out.println("Not able to book the ticket" + e.getMessage());
+				try {
+					AnchorPane root = (AnchorPane) FXMLLoader.load(getClass().getResource("/views/TicketView.fxml"));
+					System.out.println("Launched Ticket Details Screen");
+					Scene scene = new Scene(root, 800, 600);
+					Main.stage.setScene(scene);
+					Main.stage.setTitle("Ticket Details");
+					Main.stage.show();
+					TicketController.setUsername(user_name);
+				} catch (Exception e) {
+					System.out.println("Error in inflating view: " + e.getMessage());
+				}
 			}
-		
-		try {
-			AnchorPane root = (AnchorPane) FXMLLoader.load(getClass().getResource("/views/TicketView.fxml"));
-			System.out.println("Launched Ticket Details Screen");
-			Scene scene = new Scene(root, 800, 600);
-			Main.stage.setScene(scene);
-			Main.stage.setTitle("Ticket Details");
-			Main.stage.show();
-			TicketController.setUsername(user_name);
 		} catch (Exception e) {
-			System.out.println("Error in inflating view: " + e.getMessage());
-		}
-		}
-		}catch(Exception e) {
 			System.out.println("Error in booking ticket: " + e.getMessage());
-	}
+		}
 	}
 
 	public void create() {
