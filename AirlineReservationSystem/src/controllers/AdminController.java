@@ -7,7 +7,6 @@ import application.Main;
 import dao.AdminDao;
 import dao.CustomerDao;
 import dao.CustomerViewDao;
-import dao.TicketDetailsDao;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -24,7 +23,6 @@ import javafx.scene.layout.Pane;
 import javafx.collections.*;
 import models.Admin;
 import models.Customer;
-import models.TicketDetailsModel;
 import models.User;
 
 
@@ -215,27 +213,26 @@ public class AdminController {
 	}
 
 	public void book() {
-		TextInputDialog dialog = new TextInputDialog("Enter payment details");
+		TextInputDialog dialog = new TextInputDialog("Enter numbers");
 		dialog.setTitle("Payment Details");
 		dialog.setHeaderText("Debit/Credit Card");
 		dialog.setContentText("Please enter your card number");
 		Optional<String> cardno = dialog.showAndWait();
-		if (cardno.isPresent()) {
-			String cardnumber = cardno.get();
-			System.out.println("Card number entered: " + cardnumber);
-		}
+		String card = cardno.get();
+			if (cardno.isPresent() && !cardno.get().isEmpty()  && (card.matches("\\d*"))) {
+			System.out.println("Card number entered: " + card);
 		try {
 			AnchorPane root = (AnchorPane) FXMLLoader.load(getClass().getResource("/views/TicketView.fxml"));
-			System.out.println("Launched TicketDeatils Screen");
+			System.out.println("Launched Ticket Details Screen");
 			Scene scene = new Scene(root, 800, 600);
 			Main.stage.setScene(scene);
 			Main.stage.setTitle("Ticket Details");
 			Main.stage.show();
-			TicketController T1 = new TicketController();
-			T1.display(user_name);
+			TicketController.setUsername(user_name);
 		} catch (Exception e) {
 			System.out.println("Error in inflating view: " + e.getMessage());
 		}
+		}else{dialog.close();}
 	}
 
 	
