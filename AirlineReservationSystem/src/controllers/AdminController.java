@@ -137,6 +137,8 @@ public class AdminController implements Initializable {
 	private Button bookBtn;
 	@FXML
 	private Button deleteBtn;
+	@FXML
+	private Button createBtn;
 
 	private static String first_name;
 	private static String last_name;
@@ -264,6 +266,19 @@ public class AdminController implements Initializable {
 		pane2.setVisible(true);
 		pane1.setVisible(false);
 		pane5.setVisible(false);
+		createBtn.setDisable(false);
+		txtUsername.clear();
+		txtPassword.clear();
+		txtLname.clear();
+		txtFname.clear();
+		txtAddress.clear();
+		txtPhone.clear();
+		txtEmail.clear();
+		txtState.clear();
+		txtCity.clear();
+		txtZipcode.clear();
+		txtDob.setValue(null);
+		// UserType.clearSelection(null);
 	}
 
 	public void viewprofile() {
@@ -527,6 +542,7 @@ public class AdminController implements Initializable {
 		System.out.println("User Created Successfully!");
 		alert.setContentText("User Created Successfully!");
 		alert.showAndWait();
+		createBtn.setDisable(true);
 	}
 
 	public void update() {
