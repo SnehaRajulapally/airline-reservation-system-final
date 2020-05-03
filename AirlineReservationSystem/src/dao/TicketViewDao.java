@@ -1,3 +1,10 @@
+/* Names: BhavyaSree Bindela, Sneha Rajulapally
+ * CWID: A20448208,A20457266
+ * Final Project: Airline Reservation System. 
+ * Description: TicketViewDao-Fetch booked ticket details from database
+ * Date: 05/09/2020
+ * File: TicketViewDao.java*/
+
 package dao;
 
 import java.sql.ResultSet;
@@ -10,17 +17,17 @@ public class TicketViewDao extends DBConnect {
 	// Declare DB objects
 	DBConnect connection = new DBConnect();
 
-	// Fetch the data from table
+	// Fetch the booked ticket data from table
 	public ArrayList<TicketViewModel> getCustomer(String txtUsername) {
 		String Sql1 = "Select MAX(BOOKINGID) from ars_ticketdetails  where UNAME = " + "'" + txtUsername + "'";
 		ResultSet rs1 = null;
 
 		try {
 			Statement stmt1 = connection.getConnection().createStatement();
-
+			System.out.println(Sql1);
 			rs1 = stmt1.executeQuery(Sql1);
 			Integer Bookid;
-			if (rs1.next()) {
+			if (rs1.next()) { // get the latest booking id from data base for user
 				Bookid = rs1.getInt(1);
 			} else {
 				Bookid = 0;
@@ -53,14 +60,15 @@ public class TicketViewDao extends DBConnect {
 					t1.setlblStatus(rs.getString(11));
 					t1.setlblBookingId(rs.getInt(12));
 					ticket.add(t1);
-					System.out.println("Sucessfully fetched ticket details from database");
+					System.out.println("Sucessfully fetched ticket details from database"); // success message to get
+																							// booked ticket details
 				}
-				return ticket;
-			} catch (SQLException e) {
-				System.out.println("Error while fetching the user Information: " + e.getMessage());
+				return ticket; //return ticket details
+			} catch (SQLException e) { // error if booked ticket details are fetched
+				System.out.println("Error while fetching the booked ticket Information: " + e.getMessage());
 				return null;
 			}
-		} catch (SQLException e) {
+		} catch (SQLException e) { // error if the latest booking id is fetched
 			System.out.println("Error while fetching latest booking Id: " + e.getMessage());
 			return null;
 		}

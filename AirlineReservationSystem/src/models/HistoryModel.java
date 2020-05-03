@@ -1,3 +1,10 @@
+/* Names: BhavyaSree Bindela, Sneha Rajulapally
+ * CWID: A20448208,A20457266
+ * Final Project: Airline Reservation System. 
+ * Description: History model-setters and getters for view history fields
+ * Date: 05/09/2020
+ * File: HistoryModel.java*/
+
 package models;
 
 public class HistoryModel {
@@ -10,12 +17,15 @@ public class HistoryModel {
 	private String LNameId;
 	private String BookId;
 
+	/**
+	 * @return the BookId
+	 */
 	public String getBookId() {
 		return BookId;
 	}
 
 	/**
-	 * @param txtZipcode the txtZipcode to set
+	 * @param txtZipcode the BookId to set
 	 */
 	public void setBookId(String BookId) {
 		this.BookId = BookId;

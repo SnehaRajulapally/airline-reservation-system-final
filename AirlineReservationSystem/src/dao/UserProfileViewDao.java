@@ -1,3 +1,10 @@
+/* Names: BhavyaSree Bindela, Sneha Rajulapally
+ * CWID: A20448208,A20457266
+ * Final Project: Airline Reservation System. 
+ * Description: UserProfileViewDao-Dtech user profile infromation from db
+ * Date: 05/09/2020
+ * File: UserProfileViewDao.java*/
+
 package dao;
 
 import java.sql.PreparedStatement;
@@ -6,7 +13,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ArrayList;
-
 import models.UserProfileModel;
 
 public class UserProfileViewDao extends DBConnect {
@@ -14,7 +20,7 @@ public class UserProfileViewDao extends DBConnect {
 	// Declare DB objects
 	DBConnect connection = new DBConnect();
 
-	// Fetch the data from table
+	// method to fetch the user profile details from table
 	public ArrayList<UserProfileModel> getCustomer(String txtUsername) {
 		String Sql = "Select LNAME, FNAME, DOB, EMAIL, PHONE, ADDRESS, CITY, STATE, ZIPCODE from ars_customers1 where UNAME = "
 				+ "'" + txtUsername + "'";
@@ -41,16 +47,17 @@ public class UserProfileViewDao extends DBConnect {
 				c1.settxtState(rs.getString(8));
 				c1.settxtZipcode(rs.getString(9));
 				customer.add(c1);
-				System.out.println("Sucessfully fetched data from database");
+				System.out.println("Sucessfully fetched profile data from database"); // success message if the profile
+																						// data is fetched successfully
 			}
 			return customer;
-		} catch (SQLException e) {
-			System.out.println("Error while fetching the user Information: " + e.getMessage());
+		} catch (SQLException e) { // error if the profile data is not fetched successfully
+			System.out.println("Error while fetching the user profile info: " + e.getMessage());
 			return null;
 		}
 	}
 
-	// Update the database
+	// Update the database with the user profile details
 	public UserProfileModel update(String txtUsername, UserProfileModel customer) {
 		// Query to update the customer info in database
 		String query = "Update ars_customers1 set LNAME=?, FNAME =?, DOB=?, EMAIL=?, PHONE=?, ADDRESS=?, CITY=?, STATE=?, ZIPCODE=? "
@@ -60,6 +67,7 @@ public class UserProfileViewDao extends DBConnect {
 		try {
 			PreparedStatement statement = connection.getConnection().prepareStatement(query,
 					Statement.RETURN_GENERATED_KEYS);
+			System.out.println(query);
 			statement.setString(1, customer.gettxtLname());
 			statement.setString(2, customer.gettxtFname());
 			statement.setDate(3, java.sql.Date.valueOf(customer.gettxtDob()));
@@ -73,14 +81,15 @@ public class UserProfileViewDao extends DBConnect {
 			// Execute the update
 			statement.executeUpdate();
 
-			System.out.println("Sucessfully updated info in the database");
+			System.out.println("Sucessfully updated profile in the database"); // success message if the profile is
+																				// updated in the database successfully
 
-		} catch (SQLException e) {
+		} catch (SQLException e) { // error if the profile is not updated in the database successfully
 			customer = null;
-			System.out.println("Error Updating customer Info: " + e.getMessage());
+			System.out.println("Error updating profile information in database: " + e.getMessage());
 		}
 
-		return customer;
+		return customer;  //return profile details
 	}
 
 }

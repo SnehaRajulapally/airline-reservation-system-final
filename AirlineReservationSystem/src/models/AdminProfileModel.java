@@ -1,3 +1,11 @@
+
+/* Names: BhavyaSree Bindela, Sneha Rajulapally
+ * CWID: A20448208,A20457266
+ * Final Project: Airline Reservation System. 
+ * Description: Admin Profile model-setters and getters for admin profile fields
+ * Date: 05/09/2020
+ * File: AdminProfileModel.java*/
+
 package models;
 
 import java.time.LocalDate;

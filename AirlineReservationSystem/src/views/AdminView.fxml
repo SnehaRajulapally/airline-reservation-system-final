@@ -21,7 +21,7 @@
             <Image url="@flight_plane_sky_color_line_61872_1920x1080.jpg" />
          </image>
       </ImageView>
-      <Label layoutX="174.0" layoutY="35.0" text="Welcome to Illinois Tech Airways Admin Account" textAlignment="CENTER">
+      <Label layoutX="198.0" layoutY="35.0" text="Welcome to Illinois Tech Airways Admin Account" textAlignment="CENTER">
          <font>
             <Font name="System Bold Italic" size="18.0" />
          </font>

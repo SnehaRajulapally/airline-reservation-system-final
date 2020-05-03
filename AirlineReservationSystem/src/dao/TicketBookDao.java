@@ -1,3 +1,10 @@
+/* Names: BhavyaSree Bindela, Sneha Rajulapally
+ * CWID: A20448208,A20457266
+ * Final Project: Airline Reservation System. 
+ * Description: TicketDao-Update booking details in database
+ * Date: 05/09/2020
+ * File: TicketDao.java*/
+
 package dao;
 
 import java.sql.PreparedStatement;
@@ -5,13 +12,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-
 import models.TicketBookModel;
 
 public class TicketBookDao extends DBConnect {
 	// Declare DB objects
 	DBConnect connection = new DBConnect();
 
+	// method to get booked details from data base and displaying
 	public ArrayList<TicketBookModel> getCustomer(String user_name) {
 		// Query to select customer details
 		String sql = "SELECT LNAME, FNAME, EMAIL, PHONE FROM ARS_CUSTOMERS1 WHERE UNAME = " + "'" + user_name + "'";
@@ -23,7 +30,7 @@ public class TicketBookDao extends DBConnect {
 			Statement stmt = connection.getConnection().createStatement();
 
 			rs = stmt.executeQuery(sql);
-
+			System.out.println(sql);
 			if (rs.next()) {
 				TicketBookModel B1 = new TicketBookModel();
 				// set result set to the text fields
@@ -33,16 +40,19 @@ public class TicketBookDao extends DBConnect {
 				B1.setPhone(rs.getString(4));
 
 				TBook.add(B1);
-				System.out.println("Sucessfully fetched data from database");
+				System.out.println("Sucessfully fetched booked ticket data from database"); // success message if the
+																							// booked ticket data is
+																							// fetched successfully
 			}
 			return TBook;
-		} catch (SQLException e) {
-			System.out.println("Error while fetching the user Information to book ticket: " + e.getMessage());
+		} catch (SQLException e) { // error if the booked ticket data is not fetched successfully
+			System.out.println("Error while fetching the booked detail information: " + e.getMessage());
 			return null;
 		}
 
 	}
 
+	// method to insert the new booked ticket details into database
 	public void BookTicket(String user_name, String last_name, String first_name, String email, long phone, String from,
 			String to, String date, String time, String class1, String price) {
 		// Query to insert new customer into database
@@ -53,6 +63,7 @@ public class TicketBookDao extends DBConnect {
 			// Use sql prepared statement for dynamic sql
 			PreparedStatement statement = connection.getConnection().prepareStatement(sql1,
 					Statement.RETURN_GENERATED_KEYS);
+			System.out.println(sql1);
 			// Set the parameters to the query
 			statement.setString(1, user_name);
 			statement.setString(2, last_name);
@@ -70,14 +81,16 @@ public class TicketBookDao extends DBConnect {
 			// Execute the insert
 			statement.executeUpdate();
 
-			System.out.println("Sucessfully Booked a ticket");
+			System.out.println("Sucessfully Booked a ticket"); // success message after booked details are inserted
+																// successfully in db
 
-		} catch (SQLException e) {
+		} catch (SQLException e) { // Error if after booked details are not inserted successfully in db
 
 			System.out.println("Error while booking a ticket: " + e.getMessage());
 		}
 	}
 
+	// method to delete ticket history by admin
 	public void deleteTicket(String last_name, String from, String to, String date, String time, String class1,
 			String bookId) {
 		// Query to insert new customer into database
@@ -88,6 +101,7 @@ public class TicketBookDao extends DBConnect {
 			// Use sql prepared statement for dynamic sql
 			PreparedStatement statement = connection.getConnection().prepareStatement(sql2,
 					Statement.RETURN_GENERATED_KEYS);
+			System.out.println(sql2);
 			// Set the parameters to the query
 			statement.setString(1, last_name);
 			statement.setString(2, from);
@@ -100,9 +114,10 @@ public class TicketBookDao extends DBConnect {
 			// Execute the delete
 			statement.executeUpdate();
 
-			System.out.println("Deleted the ticket");
+			System.out.println("Deleted the ticket"); // success message if the ticket record is successfully deleted
+														// form database
 
-		} catch (SQLException e) {
+		} catch (SQLException e) { // error if the ticket record is not successfully deleted form database
 
 			System.out.println("Error while deleting a ticket: " + e.getMessage());
 		}

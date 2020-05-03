@@ -1,3 +1,10 @@
+/* Names: BhavyaSree Bindela, Sneha Rajulapally
+ * CWID: A20448208,A20457266
+ * Final Project: Airline Reservation System. 
+ * Description: UserProfile model-setters and getters for User Profile  fields
+ * Date: 05/09/2020
+ * File: UserProfileModel.java*/
+
 package models;
 
 import java.time.LocalDate;
@@ -144,7 +151,7 @@ public class UserProfileModel {
 		this.txtEmail = txtEmail;
 	}
 
-	/**
+	/**F
 	 * @return the txtPhone
 	 */
 	public long gettxtPhone() {

@@ -1,3 +1,10 @@
+/* Names: BhavyaSree Bindela, Sneha Rajulapally
+ * CWID: A20448208,A20457266
+ * Final Project: Airline Reservation System. 
+ * Description: TicketView model-setters and getters for Ticket View fields
+ * Date: 05/09/2020
+ * File: TicketViewModel.java*/
+
 package models;
 
 public class TicketViewModel {
@@ -63,140 +70,140 @@ public class TicketViewModel {
 	}
 
 	/**
-	 * @return the txtDob
+	 * @return the txtDate
 	 */
 	public String getlblDate() {
 		return lblDate;
 	}
 
 	/**
-	 * @param txtDob the txtDob to set
+	 * @param txtDob the txtDate to set
 	 */
 	public void setlblDate(String lblDate) {
 		this.lblDate = lblDate;
 	}
 
 	/**
-	 * @return the txtDob
+	 * @return the lblTime
 	 */
 	public String getlblTime() {
 		return lblTime;
 	}
 
 	/**
-	 * @param txtDob the txtDob to set
+	 * @param lblTime the lblTime to set
 	 */
 	public void setlblTime(String lblTime) {
 		this.lblTime = lblTime;
 	}
 
 	/**
-	 * @return the txtAddress
+	 * @return the lblTo
 	 */
 	public String getlblTo() {
 		return lblTo;
 	}
 
 	/**
-	 * @param txtAddress the txtAddress to set
+	 * @param lblTo the lblTo to set
 	 */
 	public void setlblTo(String lblTo) {
 		this.lblTo = lblTo;
 	}
 
 	/**
-	 * @return the txtCity
+	 * @return the lblFrom
 	 */
 	public String getlblFrom() {
 		return lblFrom;
 	}
 
 	/**
-	 * @param txtCity the txtCity to set
+	 * @param lblFrom the lblFrom to set
 	 */
 	public void setlblFrom(String lblFrom) {
 		this.lblFrom = lblFrom;
 	}
 
 	/**
-	 * @return the txtState
+	 * @return the lblClass
 	 */
 	public String getlblClass() {
 		return lblClass;
 	}
 
 	/**
-	 * @param txtState the txtState to set
+	 * @param lblClass the lblClass to set
 	 */
 	public void setlblClass(String lblClass) {
 		this.lblClass = lblClass;
 	}
 
 	/**
-	 * @return the txtZipcode
+	 * @return the lblBookingId
 	 */
 	public Integer getlblBookingId() {
 		return lblBookingId;
 	}
 
 	/**
-	 * @param txtZipcode the txtZipcode to set
+	 * @param lblBookingId the lblBookingId to set
 	 */
 	public void setlblBookingId(Integer lblBookingId) {
 		this.lblBookingId = lblBookingId;
 	}
 
 	/**
-	 * @return the txtZipcode
+	 * @return the lblPrice
 	 */
 	public String getlblPrice() {
 		return lblPrice;
 	}
 
 	/**
-	 * @param txtZipcode the txtZipcode to set
+	 * @param lblPrice the lblPrice to set
 	 */
 	public void setlblPrice(String lblPrice) {
 		this.lblPrice = lblPrice;
 	}
 
 	/**
-	 * @return the txtEmail
+	 * @return the lblEmail
 	 */
 	public String getlblEmail() {
 		return lblEmail;
 	}
 
 	/**
-	 * @param txtEmail the txtEmail to set
+	 * @param lblEmail the lblEmail to set
 	 */
 	public void setlblEmail(String lblEmail) {
 		this.lblEmail = lblEmail;
 	}
 
 	/**
-	 * @return the txtPhone
+	 * @return the lblPhone
 	 */
 	public long getlblPhone() {
 		return lblPhone;
 	}
 
 	/**
-	 * @param txtPhone the txtPhone to set
+	 * @param lblPhone the lblPhone to set
 	 */
 	public void setlblPhone(long lblPhone) {
 		this.lblPhone = lblPhone;
 	}
 
 	/**
-	 * @return the txtEmail
+	 * @return the lblStatus
 	 */
 	public String getlblStatus() {
 		return lblStatus;
 	}
 
 	/**
-	 * @param txtEmail the txtEmail to set
+	 * @param lblStatus the lblStatus to set
 	 */
 	public void setlblStatus(String lblStatus) {
 		this.lblStatus = lblStatus;

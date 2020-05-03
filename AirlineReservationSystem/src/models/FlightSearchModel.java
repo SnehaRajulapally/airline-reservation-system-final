@@ -1,3 +1,10 @@
+/* Names: BhavyaSree Bindela, Sneha Rajulapally
+ * CWID: A20448208,A20457266
+ * Final Project: Airline Reservation System. 
+ * Description: Flight Search model-setters and getters for flight serach fields
+ * Date: 05/09/2020
+ * File: FlightSearchModel.java*/
+
 package models;
 
 import java.time.LocalDate;

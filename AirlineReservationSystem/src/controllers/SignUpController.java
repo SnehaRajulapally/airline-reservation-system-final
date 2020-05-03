@@ -1,10 +1,14 @@
+/* Names: BhavyaSree Bindela, Sneha Rajulapally
+ * CWID: A20448208,A20457266
+ * Final Project: Airline Reservation System. 
+ * Description: Signup controller to create a new account for first time users
+ * Date: 05/09/2020
+ * File: SignUp Controller.java*/
+
 package controllers;
 
 import java.io.IOException;
 import java.time.LocalDate;
-
-//import java.time.Date;
-
 import dao.UserProfileUpdateDao;
 import application.Main;
 import javafx.fxml.FXML;
@@ -55,6 +59,7 @@ public class SignUpController {
 	// Method to submit the data to database
 	public void submit() {
 		// Extract the data from the text fields of view
+		// validate the input fields
 		String LNAME = this.txtLname.getText();
 		if (LNAME == null || LNAME.trim().equals("")) {
 			return;
@@ -134,13 +139,14 @@ public class SignUpController {
 		C1.CreateDetails(customer);
 
 		C1.CreateUser(user);
-
+		// Alert message for successful signup
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setTitle("Thank you Message");
 		alert.setHeaderText("Signup Successful");
 		alert.setContentText("Thank you for signing up! Please Login!");
 		alert.showAndWait();
-
+		System.out.println("Signup Successful!");
+		// Launch Login screen if the signup is successful
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/LoginView.fxml"));
 			AnchorPane root = (AnchorPane) loader.load();
@@ -149,14 +155,17 @@ public class SignUpController {
 			Main.stage.show();
 			Main.stage.setTitle("Login");
 			System.out.println("Launched Login Screen");
-		} catch (Exception e) {
-			System.out.println("Error occured while inflating Login view:" + e);
+		} catch (Exception e) { // Error in launching screen
+			System.out.println("Error occured while inflating Login view:" + e.getMessage());
 		}
 
 	}
 
+	// method to log out when clicked on home from login screen and display home
+	// screen
 	public void home() throws IOException {
 		try {
+			// launch home screen
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/HomeView.fxml"));
 			AnchorPane root = (AnchorPane) loader.load();
 			Scene scene = new Scene(root);
@@ -164,8 +173,8 @@ public class SignUpController {
 			Main.stage.show();
 			Main.stage.setTitle("Home");
 			System.out.println("Launched Illinois Tech Airways Home Screen");
-		} catch (Exception e) {
-			System.out.println("Error occured while inflating Home view:" + e);
+		} catch (Exception e) { // error when launching home screen
+			System.out.println("Error occured while inflating Home view:" + e.getMessage());
 		}
 
 	}

@@ -1,3 +1,10 @@
+/* Names: BhavyaSree Bindela, Sneha Rajulapally
+ * CWID: A20448208,A20457266
+ * Final Project: Airline Reservation System. 
+ * Description: Login model-setters and getters for Login view fields
+ * Date: 05/09/2020
+ * File: LoginyModel.java*/
+
 package models;
 
 public class LoginModel {

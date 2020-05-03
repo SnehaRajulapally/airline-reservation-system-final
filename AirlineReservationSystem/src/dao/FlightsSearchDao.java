@@ -1,3 +1,10 @@
+/* Names: BhavyaSree Bindela, Sneha Rajulapally
+ * CWID: A20448208,A20457266
+ * Final Project: Airline Reservation System. 
+ * Description: FlightSearchDao-Fetch flight details based on selection criteria from database
+ * Date: 05/09/2020
+ * File: FlightSearchDao.java*/
+
 package dao;
 
 import java.sql.PreparedStatement;
@@ -5,7 +12,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-
 import models.FlightSearchModel;
 
 public class FlightsSearchDao extends DBConnect {
@@ -13,6 +19,7 @@ public class FlightsSearchDao extends DBConnect {
 	// Declare DB objects
 	DBConnect connection = new DBConnect();
 
+	// method to get flights data from data base based on the selection criteria
 	public ArrayList<FlightSearchModel> getFlights(String from_place, String to_place, String date, String in_class) {
 
 		System.out.println("Starting to fetch the Flights details");
@@ -26,8 +33,8 @@ public class FlightsSearchDao extends DBConnect {
 		try {
 			PreparedStatement statement = connection.getConnection().prepareStatement(Sql,
 					Statement.RETURN_GENERATED_KEYS);
-
-			System.out.println("Entered in to DB to fetch the Flights details");
+			System.out.println(Sql);
+			System.out.println("Fetching Flights details");
 
 			statement.setString(1, from_place);
 			statement.setString(2, to_place);
@@ -36,7 +43,7 @@ public class FlightsSearchDao extends DBConnect {
 
 			rs = statement.executeQuery();
 
-			while (rs.next()) {
+			while (rs.next()) { // get all the flights info based on selection criteria
 				FlightSearchModel F1 = new FlightSearchModel();
 
 				F1.setFromId(rs.getString(1));
@@ -48,17 +55,18 @@ public class FlightsSearchDao extends DBConnect {
 
 				flights.add(F1);
 
-				System.out.println("Sucessfully fetched flights data from database");
-				// return flights;
+				System.out.println("Sucessfully fetched flights data from database"); // Success message if the flight
+																						// details are successfully
+																						// fetched
 
 			}
-		} catch (SQLException e) {
+		} catch (SQLException e) { // error if the flight details are not successfully fetched
 			System.out.println("Error while fetching flight details: " + e.getMessage());
 			flights = null;
 
 		}
 
-		return flights;
+		return flights; // return flights data
 
 	}
 }
