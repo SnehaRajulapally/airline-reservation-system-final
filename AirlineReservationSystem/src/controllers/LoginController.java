@@ -13,6 +13,10 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
+
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 import application.Main;
 import dao.LoginDao;
 import javafx.fxml.FXMLLoader;
@@ -55,9 +59,22 @@ public class LoginController {
 		}
 	}
 
+	private String hashText(String password) throws NoSuchAlgorithmException {
+		MessageDigest md = MessageDigest.getInstance("SHA-256");
+		md.update(password.getBytes());
+
+		byte byteData[] = md.digest();
+
+		//convert the byte to hex format method 1
+        StringBuffer sb = new StringBuffer();
+        for (int i = 0; i < byteData.length; i++) {
+         sb.append(Integer.toString((byteData[i] & 0xff) + 0x100, 16).substring(1));
+        }
+		return sb.toString();
+	}
 	// method to login when clicked on login button in login screen after giving
 	// credentials
-	public void login() {
+	public void login() throws NoSuchAlgorithmException {
 
 		lblError.setText("");
 		String username = this.txtUsername.getText(); // get username entered
@@ -82,7 +99,8 @@ public class LoginController {
 			txtPassword.setText("");
 			return;
 		}
-		checkCredentials(username, password); // validate credentials
+		String password1 = hashText(password);
+		checkCredentials(username, password1); // validate credentials
 	}
 
 	// when clicked on cancel button, username and password fields should be
@@ -116,10 +134,10 @@ public class LoginController {
 				AdminController.setUsername(username);
 			} else {
 				// if the credentials are user's, launch user view
-				root = (AnchorPane) FXMLLoader.load(getClass().getResource("/views/UserView.fxml"));
-				Main.stage.setTitle("User View");
+				root = (AnchorPane) FXMLLoader.load(getClass().getResource("/views/CustomerView.fxml"));
+				Main.stage.setTitle("Customer View");
 				System.out.println("Launched User Screen");
-				UserController.setUsername(username);
+				CustomerController.setUsername(username);
 			}
 			Scene scene = new Scene(root);
 			Main.stage.setScene(scene);

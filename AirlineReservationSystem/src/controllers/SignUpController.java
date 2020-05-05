@@ -8,21 +8,26 @@
 package controllers;
 
 import java.io.IOException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.time.LocalDate;
-import dao.UserProfileUpdateDao;
+import dao.CustomerProfileUpdateDao;
 import application.Main;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.AnchorPane;
-import models.UserProfileModel;
+import models.CustomerProfileModel;
 import models.LoginModel;
 
 public class SignUpController {
+	
+
 	@FXML
 	private TextField txtLname;
 
@@ -55,68 +60,83 @@ public class SignUpController {
 
 	@FXML
 	private TextField txtPassword;
+	
+	@FXML
+	private Label lblError;
+	
+	
+	private String hashText(String password) throws NoSuchAlgorithmException {
+		MessageDigest md = MessageDigest.getInstance("SHA-256");
+		md.update(password.getBytes());
+
+		byte byteData[] = md.digest();
+
+		//convert the byte to hex format method 1
+        StringBuffer sb = new StringBuffer();
+        for (int i = 0; i < byteData.length; i++) {
+         sb.append(Integer.toString((byteData[i] & 0xff) + 0x100, 16).substring(1));
+        }
+		return sb.toString();
+	}
+
 
 	// Method to submit the data to database
-	public void submit() {
+	public void submit() 
+	{
+		lblError.setText("");
 		// Extract the data from the text fields of view
 		// validate the input fields
 		String LNAME = this.txtLname.getText();
 		if (LNAME == null || LNAME.trim().equals("")) {
+			lblError.setText("Error: Last Name should not be empty");	
 			return;
 		}
 
 		String FNAME = this.txtFname.getText();
 		if (FNAME == null || FNAME.trim().equals("")) {
+			lblError.setText("Error: First Name should not be empty");
 			return;
 		}
 
 		LocalDate DOB = this.txtDob.getValue();
 		if (DOB == null) {
+			lblError.setText("Error: Date of Birth should not be empty");
 			return;
 		}
 
 		String EMAIL = this.txtEmail.getText();
 		if (EMAIL == null || EMAIL.trim().equals("")) {
+			lblError.setText("Error: Email should not be empty");
 			return;
 		}
 
 		String PHONE = this.txtPhone.getText();
-		if (PHONE == null || PHONE.trim().equals("")) {
+		if (!PHONE.matches("\\d*")) {
+			lblError.setText("Error: Phone number should be a number");
 			return;
 		}
-
-		String ADDRESS = this.txtAddress.getText();
-		if (ADDRESS == null || ADDRESS.trim().equals("")) {
-			return;
-		}
-
+		
+		String ADDRESS = this.txtAddress.getText(); 
 		String CITY = this.txtCity.getText();
-		if (CITY == null || CITY.trim().equals("")) {
-			return;
-		}
-
 		String STATE = this.txtState.getText();
-		if (STATE == null || STATE.trim().equals("")) {
-			return;
-		}
+		String ZIPCODE = this.txtZipcode.getText(); 		
 
-		String ZIPCODE = this.txtZipcode.getText();
-		if (ZIPCODE == null || ZIPCODE.trim().equals("")) {
-			return;
-		}
+
 
 		String USERNAME = this.txtUsername.getText();
 		if (USERNAME == null || USERNAME.trim().equals("")) {
+			lblError.setText("Error: UserName should not be empty");
 			return;
 		}
 
 		String PASSWORD = this.txtPassword.getText();
 		if (PASSWORD == null || PASSWORD.trim().equals("")) {
+			lblError.setText("Error: Password should not be empty");
 			return;
 		}
 
 		// Create Customer Object
-		UserProfileModel customer = new UserProfileModel();
+		CustomerProfileModel customer = new CustomerProfileModel();
 		// Create User Object
 		LoginModel user = new LoginModel();
 
@@ -132,10 +152,19 @@ public class SignUpController {
 		customer.settxtState(STATE);
 		customer.settxtZipcode(ZIPCODE);
 		user.settxtUsername(USERNAME);
-		user.settxtPassword(PASSWORD);
+		
+		try 
+		{
+			user.settxtPassword(hashText(PASSWORD));
+		} catch (NoSuchAlgorithmException e1) 
+		{
+			System.out.println("Error while setting hash password" + e1.getMessage());
+		}
+		
+		
 
 		// Create data access instance for customer object
-		UserProfileUpdateDao C1 = new UserProfileUpdateDao();
+		CustomerProfileUpdateDao C1 = new CustomerProfileUpdateDao();
 		C1.CreateDetails(customer);
 
 		C1.CreateUser(user);

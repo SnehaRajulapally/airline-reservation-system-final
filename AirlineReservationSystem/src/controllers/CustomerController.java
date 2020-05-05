@@ -15,9 +15,9 @@ import java.util.ResourceBundle;
 import java.util.concurrent.atomic.AtomicLong;
 import javafx.fxml.Initializable;
 import application.Main;
-import dao.UserProfileViewDao;
+import dao.CustomerProfileViewDao;
 import dao.FlightsSearchDao;
-import dao.UserHistoryDao;
+import dao.CustomerHistoryDao;
 import dao.TicketBookDao;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -28,6 +28,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -38,12 +39,12 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
-import models.UserProfileModel;
+import models.CustomerProfileModel;
 import models.FlightSearchModel;
 import models.HistoryModel;
 import models.TicketBookModel;
 
-public class UserController implements Initializable {
+public class CustomerController implements Initializable {
 	@FXML
 	private Pane pane1; // set pane 1
 	@FXML
@@ -78,6 +79,10 @@ public class UserController implements Initializable {
 	private ChoiceBox<String> Class; // choice box for travel from class
 	@FXML
 	private DatePicker Date; // set date picker
+	@FXML
+	private Label lblError;
+	@FXML
+	private Label lblError1;
 	@FXML
 	private TableView<FlightSearchModel> tblFlights; // Table view for flight details
 	@FXML
@@ -121,17 +126,15 @@ public class UserController implements Initializable {
 	private static String F_PRICE; // set global object price in search flight in search view
 
 	// set global user name object
-	static UserProfileModel c = new UserProfileModel();
+	static CustomerProfileModel c = new CustomerProfileModel();
 	static String user_name = c.gettxtUsername();
 
 	// Setting choice box drop down values for from destination, to destination and
 	// class
-	final ObservableList<String> FromL = FXCollections.observableArrayList("Chicago", "New York", "Seattle", "Orlando",
-			"Dallas", "California");
-	final ObservableList<String> ToL = FXCollections.observableArrayList("Chicago", "New York", "Seattle", "Orlando",
-			"Dallas", "California");
-	final ObservableList<String> ClassL = FXCollections.observableArrayList("Economy", "Premium Economy", "Business",
-			"First Class");
+	final ObservableList<String> FromL = FXCollections.observableArrayList("Chicago");
+	final ObservableList<String> ToL = FXCollections.observableArrayList("New York", "Seattle", "Orlando",
+			"Dallas");
+	final ObservableList<String> ClassL = FXCollections.observableArrayList("Economy", "Business");
 
 	// Initialize the user controller
 	public void initialize(URL location, ResourceBundle resources) {
@@ -219,7 +222,7 @@ public class UserController implements Initializable {
 		System.out.println("Welcome User: " + user_name + "!");
 	}
 
-	public UserController() {
+	public CustomerController() {
 
 	}
 
@@ -229,14 +232,14 @@ public class UserController implements Initializable {
 		pane2.setVisible(false);
 		pane1.setVisible(true); // set other panes as invisible and set profile screen visible
 		pane4.setVisible(false);
-		System.out.println(user_name);
+
 
 		// Create a DAO instance of the model
-		UserProfileViewDao customerDao = new UserProfileViewDao();
-		ArrayList<UserProfileModel> arrayList = customerDao.getCustomer(user_name); // pass user name to get information
+		CustomerProfileViewDao customerDao = new CustomerProfileViewDao();
+		ArrayList<CustomerProfileModel> arrayList = customerDao.getCustomer(user_name); // pass user name to get information
 
 		// set values in the text fields in view profile screen
-		for (UserProfileModel customer : arrayList) {
+		for (CustomerProfileModel customer : arrayList) {
 			System.out.println("setting the values");
 			txtLname.setText(customer.gettxtLname());
 			txtFname.setText(customer.gettxtFname());
@@ -258,7 +261,7 @@ public class UserController implements Initializable {
 		pane4.setVisible(false);
 
 		// Create data access instance for History data access object
-		UserHistoryDao H1 = new UserHistoryDao();
+		CustomerHistoryDao H1 = new CustomerHistoryDao();
 
 		// if history details are fetched, show table view else show alert to say no
 		// history
@@ -312,16 +315,6 @@ public class UserController implements Initializable {
 
 					}
 
-					System.out.println(last_name);
-					System.out.println(first_name);
-					System.out.println(email);
-					System.out.println(phone);
-					System.out.println(F_FROM);
-					System.out.println(F_TO);
-					System.out.println(F_DATE);
-					System.out.println(F_TIME);
-					System.out.println(F_CLASS);
-					System.out.println(F_PRICE);
 
 					TB.BookTicket(user_name, last_name, first_name, email, phone, F_FROM, F_TO, F_DATE, F_TIME, F_CLASS,
 							F_PRICE);
@@ -363,7 +356,16 @@ public class UserController implements Initializable {
 
 		String F_FROM = this.From.getValue();
 		String F_TO = this.To.getValue();
-		String F_DATE = this.Date.getValue().toString();
+
+		LocalDate F_DATE = this.Date.getValue();
+		if(F_DATE == null) {
+			lblError1.setText("Please Enter the Date!");
+			return;
+		}
+		lblError1.setText("");
+		String F_DATE1 = this.Date.getValue().toString();
+
+
 		String F_CLASS = this.Class.getValue();
 
 		// Create data access instance for Flights object
@@ -371,7 +373,7 @@ public class UserController implements Initializable {
 		// check if there are any flights for selected criteria and display the details
 		// if not throw an alert to change search criteria
 		try {
-			tblFlights.getItems().setAll(F1.getFlights(F_FROM, F_TO, F_DATE, F_CLASS));
+			tblFlights.getItems().setAll(F1.getFlights(F_FROM, F_TO, F_DATE1, F_CLASS));
 			if (tblFlights.getItems().isEmpty()) {
 				Alert alert = new Alert(AlertType.INFORMATION);
 				alert.setTitle("Alert Message");
@@ -405,37 +407,48 @@ public class UserController implements Initializable {
 	// method to update the profile when clicked on update button in view profile
 	// screen
 	public void update() {
+		
+		lblError.setText("");
 		// Extract the data from text fields
 
 		// Validate the data and check if all the value are entered
 		String LNAME = this.txtLname.getText();
 		if (LNAME == null || LNAME.trim().equals("")) {
+			lblError.setText("Error: Last Name should not be empty");
 			return;
 		}
 
 		String FNAME = this.txtFname.getText();
 		if (FNAME == null || FNAME.trim().equals("")) {
+			lblError.setText("Error: First Name should not be empty");
 			return;
 		}
 
 		LocalDate DOB = this.txtDob.getValue();
 		if (DOB == null) {
+			lblError.setText("Error: Date of Birth should not be empty");
 			return;
 		}
 
 		String EMAIL = this.txtEmail.getText();
 		if (EMAIL == null || EMAIL.trim().equals("")) {
+			lblError.setText("Error: Email should not be empty");
 			return;
 		}
 
 		String PHONE = this.txtPhone.getText();
+		if (!PHONE.matches("\\d*")) {
+			lblError.setText("Error: Phone number should be a number");
+			return;
+		}
+		
 		String ADDRESS = this.txtAddress.getText();
 		String CITY = this.txtCity.getText();
 		String STATE = this.txtState.getText();
 		String ZIPCODE = this.txtZipcode.getText();
 
 		// Create a Customer object to set the values
-		UserProfileModel customer = new UserProfileModel();
+		CustomerProfileModel customer = new CustomerProfileModel();
 
 		customer.settxtLname(LNAME);
 		customer.settxtFname(FNAME);
@@ -448,7 +461,7 @@ public class UserController implements Initializable {
 		customer.settxtZipcode(ZIPCODE);
 
 		// Create data access instance for customerView object
-		UserProfileViewDao c1 = new UserProfileViewDao();
+		CustomerProfileViewDao c1 = new CustomerProfileViewDao();
 		c1.update(user_name, customer);
 		// alert message to show that profile has been updated successfully
 		Alert alert = new Alert(AlertType.INFORMATION);

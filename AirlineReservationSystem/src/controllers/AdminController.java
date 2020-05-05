@@ -9,6 +9,8 @@
 package controllers;
 
 import java.net.URL;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Optional;
@@ -18,8 +20,8 @@ import javafx.application.Platform;
 import application.Main;
 import dao.AdminProfileUpdateDao;
 import dao.AdminHistoryDao;
-import dao.UserProfileUpdateDao;
-import dao.UserProfileViewDao;
+import dao.CustomerProfileUpdateDao;
+import dao.CustomerProfileViewDao;
 import dao.FlightsSearchDao;
 import dao.TicketBookDao;
 import javafx.collections.FXCollections;
@@ -30,6 +32,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -42,7 +45,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.collections.*;
 import models.AdminProfileModel;
-import models.UserProfileModel;
+import models.CustomerProfileModel;
 import models.FlightSearchModel;
 import models.HistoryModel;
 import models.TicketBookModel;
@@ -100,6 +103,12 @@ public class AdminController implements Initializable {
 	private TextField txtUsername; // set user name text field
 	@FXML
 	private TextField txtPassword; // set password text field
+	@FXML
+	private Label lblErrorU;
+	@FXML
+	private Label lblErrorC;
+	@FXML
+	private Label lblError1;
 	@FXML
 	private ChoiceBox<String> UserType; // choice box for user type-admin/user
 	@FXML
@@ -165,18 +174,16 @@ public class AdminController implements Initializable {
 	private static String T_last_name; // set global object Last name from in history view
 
 	// set global user name object
-	static UserProfileModel c = new UserProfileModel();
+	static CustomerProfileModel c = new CustomerProfileModel();
 	static String user_name = c.gettxtUsername();
 
 	// Setting choice box drop down values for from destination, to destination and
 	// class and user type-admin/user
 	final ObservableList<String> UserTypeL = FXCollections.observableArrayList("User", "Admin");
-	final ObservableList<String> FromL = FXCollections.observableArrayList("Chicago", "New York", "Seattle", "Orlando",
-			"Dallas", "California");
-	final ObservableList<String> ToL = FXCollections.observableArrayList("Chicago", "New York", "Seattle", "Orlando",
-			"Dallas", "California");
-	final ObservableList<String> ClassL = FXCollections.observableArrayList("Economy", "Premium Economy", "Business",
-			"First Class");
+	final ObservableList<String> FromL = FXCollections.observableArrayList("Chicago");
+	final ObservableList<String> ToL = FXCollections.observableArrayList("New York", "Seattle", "Orlando",
+			"Dallas");
+	final ObservableList<String> ClassL = FXCollections.observableArrayList("Economy", "Business");
 
 	// Initialize the admin controller
 	public void initialize(URL location, ResourceBundle resources) {
@@ -306,7 +313,6 @@ public class AdminController implements Initializable {
 		pane2.setVisible(false);
 		pane1.setVisible(true); // set other panes as invisible and set profile screen visible
 		pane5.setVisible(false);
-		System.out.println(user_name);
 
 		// Create a DAO instance of the model
 		AdminProfileUpdateDao AdminDao = new AdminProfileUpdateDao();
@@ -327,7 +333,7 @@ public class AdminController implements Initializable {
 		}
 	}
 
-	// method for admin to lastet view history details when clicked on view history
+	// method for admin to latest view history details when clicked on view history
 	// button
 	public void viewhistory() {
 		pane4.setVisible(false);
@@ -388,13 +394,6 @@ public class AdminController implements Initializable {
 		TicketBookDao T = new TicketBookDao();
 
 		try {
-			System.out.println(T_last_name);
-			System.out.println(T_FROM);
-			System.out.println(T_TO);
-			System.out.println(T_DATE);
-			System.out.println(T_TIME);
-			System.out.println(T_CLASS);
-			System.out.println(T_BOOKID);
 
 			T.deleteTicket(T_last_name, T_FROM, T_TO, T_DATE, T_TIME, T_CLASS, T_BOOKID);
 
@@ -437,17 +436,6 @@ public class AdminController implements Initializable {
 
 					}
 
-					System.out.println(last_name);
-					System.out.println(first_name);
-					System.out.println(email);
-					System.out.println(phone);
-					System.out.println(F_FROM);
-					System.out.println(F_TO);
-					System.out.println(F_DATE);
-					System.out.println(F_TIME);
-					System.out.println(F_CLASS);
-					System.out.println(F_PRICE);
-
 					T1.BookTicket(user_name, last_name, first_name, email, phone, F_FROM, F_TO, F_DATE, F_TIME, F_CLASS,
 							F_PRICE);
 					// Alert to show success message that ticket was booked successfully
@@ -487,7 +475,15 @@ public class AdminController implements Initializable {
 
 		String F_FROM = this.From.getValue();
 		String F_TO = this.To.getValue();
-		String F_DATE = this.Date.getValue().toString();
+
+		LocalDate F_DATE = this.Date.getValue();
+		if(F_DATE == null) {
+			lblError1.setText("Please Enter the Date!");
+			return;
+		}
+		lblError1.setText("");
+		String F_DATE1 = this.Date.getValue().toString();
+		
 		String F_CLASS = this.Class.getValue();
 
 		// Create data access instance for Flights object
@@ -495,7 +491,7 @@ public class AdminController implements Initializable {
 		// check if there are any flights for selected criteria and display the details
 		// if not throw an alert to change search criteria
 		try {
-			tblFlights.getItems().setAll(F1.getFlights(F_FROM, F_TO, F_DATE, F_CLASS));
+			tblFlights.getItems().setAll(F1.getFlights(F_FROM, F_TO, F_DATE1, F_CLASS));
 			if (tblFlights.getItems().isEmpty()) {
 				Alert alert = new Alert(AlertType.INFORMATION);
 				alert.setTitle("Alert Message");
@@ -530,37 +526,48 @@ public class AdminController implements Initializable {
 	// method to update the profile when clicked on update button in view profile
 	// screen
 	public void update() {
+
+		lblErrorU.setText("");
 		// Extract the data from text fields
 
 		// Validate the data and check if all the value are entered
 		String LNAME = this.atxtLname.getText();
 		if (LNAME == null || LNAME.trim().equals("")) {
+			lblErrorU.setText("Error: Last Name should not be empty");
 			return;
 		}
 
 		String FNAME = this.atxtFname.getText();
 		if (FNAME == null || FNAME.trim().equals("")) {
+			lblErrorU.setText("Error: First Name should not be empty");
 			return;
 		}
 
 		LocalDate DOB = this.atxtDob.getValue();
 		if (DOB == null) {
+			lblErrorU.setText("Error: Date of Birth should not be empty");
 			return;
 		}
 
 		String EMAIL = this.atxtEmail.getText();
 		if (EMAIL == null || EMAIL.trim().equals("")) {
+			lblErrorU.setText("Error: Email should not be empty");
 			return;
 		}
 
 		String PHONE = this.atxtPhone.getText();
+		if ((PHONE == null) || (PHONE.trim().equals("")) || (!PHONE.matches("\\d*"))) {
+			lblErrorU.setText("Error: Phone number should be a number");
+			return;
+		}
+
 		String ADDRESS = this.atxtAddress.getText();
 		String CITY = this.atxtCity.getText();
 		String STATE = this.atxtState.getText();
 		String ZIPCODE = this.atxtZipcode.getText();
 
 		// Create a Customer object to set the values
-		UserProfileModel customer = new UserProfileModel();
+		CustomerProfileModel customer = new CustomerProfileModel();
 
 		customer.settxtLname(LNAME);
 		customer.settxtFname(FNAME);
@@ -573,7 +580,7 @@ public class AdminController implements Initializable {
 		customer.settxtZipcode(ZIPCODE);
 
 		// Create data access instance for customerView object
-		UserProfileViewDao c1 = new UserProfileViewDao();
+		CustomerProfileViewDao c1 = new CustomerProfileViewDao();
 		c1.update(user_name, customer);
 		// alert message to show that profile has been updated successfully
 		Alert alert = new Alert(AlertType.INFORMATION);
@@ -587,68 +594,80 @@ public class AdminController implements Initializable {
 
 	// method to allow admin to create an admin or user when clicked on create
 	// button
+
+	private String hashText(String password) throws NoSuchAlgorithmException {
+		MessageDigest md = MessageDigest.getInstance("SHA-256");
+		md.update(password.getBytes());
+
+		byte byteData[] = md.digest();
+
+		// convert the byte to hex format method 1
+		StringBuffer sb = new StringBuffer();
+		for (int i = 0; i < byteData.length; i++) {
+			sb.append(Integer.toString((byteData[i] & 0xff) + 0x100, 16).substring(1));
+		}
+		return sb.toString();
+	}
+
 	public void create() {
+
+		lblErrorC.setText("");
 		// Extract the data from the text fields of view
 		// validating the given inputs
 		String LNAME = this.txtLname.getText();
 		if (LNAME == null || LNAME.trim().equals("")) {
+			lblErrorC.setText("Error: Last Name should not be empty");
 			return;
 		}
 
 		String FNAME = this.txtFname.getText();
 		if (FNAME == null || FNAME.trim().equals("")) {
+			lblErrorC.setText("Error: First Name should not be empty");
 			return;
 		}
 
 		LocalDate DOB = this.txtDob.getValue();
 		if (DOB == null) {
+			lblErrorC.setText("Error: Date of Birth should not be empty");
 			return;
 		}
 
 		String EMAIL = this.txtEmail.getText();
 		if (EMAIL == null || EMAIL.trim().equals("")) {
+			lblErrorC.setText("Error: Email should not be empty");
 			return;
 		}
 
 		String PHONE = this.txtPhone.getText();
-		if (PHONE == null || PHONE.trim().equals("")) {
+		if ((PHONE == null) || (PHONE.trim().equals("")) || (!PHONE.matches("\\d*"))) {
+			lblErrorC.setText("Error: Phone number should be a number");
 			return;
 		}
 
 		String ADDRESS = this.txtAddress.getText();
-		if (ADDRESS == null || ADDRESS.trim().equals("")) {
-			return;
-		}
 
 		String CITY = this.txtCity.getText();
-		if (CITY == null || CITY.trim().equals("")) {
-			return;
-		}
-		System.out.println(CITY);
+
 		String STATE = this.txtState.getText();
-		if (STATE == null || STATE.trim().equals("")) {
-			return;
-		}
 
 		String ZIPCODE = this.txtZipcode.getText();
-		if (ZIPCODE == null || ZIPCODE.trim().equals("")) {
-			return;
-		}
 
 		String USERTYPE = (String) this.UserType.getValue();
 
 		String USERNAME = this.txtUsername.getText();
 		if (USERNAME == null || USERNAME.trim().equals("")) {
+			lblErrorC.setText("Error: User Name should not be empty");
 			return;
 		}
 
 		String PASSWORD = this.txtPassword.getText();
 		if (PASSWORD == null || PASSWORD.trim().equals("")) {
+			lblErrorC.setText("Error: Password should not be empty");
 			return;
 		}
 
 		// Create Customer Object
-		UserProfileModel customer = new UserProfileModel();
+		CustomerProfileModel customer = new CustomerProfileModel();
 		// Create User Object
 		LoginModel user = new LoginModel();
 
@@ -664,11 +683,15 @@ public class AdminController implements Initializable {
 		customer.settxtState(STATE);
 		customer.settxtZipcode(ZIPCODE);
 		user.settxtUsername(USERNAME);
-		user.settxtPassword(PASSWORD);
 		user.setUserType(USERTYPE);
+		try {
+			user.settxtPassword(hashText(PASSWORD));
+		} catch (NoSuchAlgorithmException e1) {
+			System.out.println("Error while setting hash password" + e1.getMessage());
+		}
 
 		// Create data access instance for customer object
-		UserProfileUpdateDao C1 = new UserProfileUpdateDao();
+		CustomerProfileUpdateDao C1 = new CustomerProfileUpdateDao();
 		C1.CreateDetails(customer);
 		C1.CreateUser(user);
 

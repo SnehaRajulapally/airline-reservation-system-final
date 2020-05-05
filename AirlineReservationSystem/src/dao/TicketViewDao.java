@@ -19,12 +19,12 @@ public class TicketViewDao extends DBConnect {
 
 	// Fetch the booked ticket data from table
 	public ArrayList<TicketViewModel> getCustomer(String txtUsername) {
-		String Sql1 = "Select MAX(BOOKINGID) from ars_ticketdetails  where UNAME = " + "'" + txtUsername + "'";
+		String Sql1 = "Select MAX(BOOKINGID) from itr_history where UNAME = " + "'" + txtUsername + "'";
 		ResultSet rs1 = null;
 
 		try {
 			Statement stmt1 = connection.getConnection().createStatement();
-			System.out.println(Sql1);
+
 			rs1 = stmt1.executeQuery(Sql1);
 			Integer Bookid;
 			if (rs1.next()) { // get the latest booking id from data base for user
@@ -33,7 +33,7 @@ public class TicketViewDao extends DBConnect {
 				Bookid = 0;
 			}
 
-			String Sql = "Select LNAME,FNAME,EMAIL,PHONE,FROMDEST,TODEST,TRAVELDATE,TRAVELTIME,CLASS,PRICE,STATUS,BOOKINGID from ars_ticketdetails  where BOOKINGID = "
+			String Sql = "Select LNAME,FNAME,EMAIL,PHONE,FROMDEST,TODEST,TRAVELDATE,TRAVELTIME,CLASS,PRICE,STATUS,BOOKINGID from itr_history where BOOKINGID = "
 					+ "'" + Bookid + "'";
 			ArrayList<TicketViewModel> ticket = new ArrayList<TicketViewModel>();
 			ResultSet rs = null;
@@ -41,7 +41,6 @@ public class TicketViewDao extends DBConnect {
 			try {
 				Statement stmt = connection.getConnection().createStatement();
 
-				System.out.println(Sql);
 
 				rs = stmt.executeQuery(Sql);
 				if (rs.next()) {
