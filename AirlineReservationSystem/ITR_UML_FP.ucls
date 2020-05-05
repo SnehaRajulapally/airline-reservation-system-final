@@ -239,7 +239,7 @@
   </class>  
   <package id="29" language="java" name="views" project="AirlineReservationSystem" 
     file="/AirlineReservationSystem/src/views" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="906" y="1838"/>    
+    <position height="55" width="127" x="929" y="1879"/>    
     <display autosize="true" stereotype="true" sort-features="false" accessors="true"/>  
   </package>  
   <dependency id="30">    
