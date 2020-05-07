@@ -14,7 +14,7 @@ import java.sql.Statement;
 import models.CustomerProfileModel;
 import models.LoginModel;
 
-public class CustomerProfileUpdateDao extends DBConnect {
+public class CustomerCreateDao extends DBConnect {
 	// Declare DB objects
 	DBConnect connection = new DBConnect();
 
