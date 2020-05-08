@@ -27,7 +27,7 @@ public class CustomerHistoryDao extends DBConnect {
 		ResultSet rs = null;
 
 		String Sql = "Select FROMDEST, TODEST, TRAVELDATE, TRAVELTIME, CLASS, BOOKINGID from itr_history where UNAME = "
-				+ "'" + user_name + "'  ORDER BY TRAVELDATE, TRAVELTIME ";
+				+ "'" + user_name + "'  ORDER BY TRAVELDATE, TRAVELTIME, BOOKINGID ";
 
 		try {
 			Statement stmt = connection.getConnection().createStatement();
