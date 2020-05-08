@@ -62,7 +62,6 @@ public class CustomerCreateDao extends DBConnect {
 			// Set the parameters to the query
 			statement1.setString(1, user.gettxtUsername());
 			statement1.setString(2, user.gettxtPassword());
-			System.out.println(user.getUserType());
 			int usertype;
 			if (user.getUserType() == "Admin") { // get usertype admin/user
 				usertype = 1;
